@@ -4,22 +4,22 @@ layout: nil
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  
- <title>hzmook</title>
- <link href="http://hzmook.github.com/atom.xml" rel="self"/>
- <link href="http://hzmook.github.com/"/>
+ <title>nekle</title>
+ <link href="http://nekle.github.com/atom.xml" rel="self"/>
+ <link href="http://nekle.github.com/"/>
  <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>http://hzmook.github.com/</id>
+ <id>http://nekle.github.com/</id>
  <author>
-   <name>hzmook</name>
-   <email>hzmook@gmail.com</email>
+   <name>nekle</name>
+   <email>nekleding@gmail.com</email>
  </author>
  
  {% for post in site.posts limit:15 %}
  <entry>
    <title>{{ post.title }}</title>
-   <link href="http://hzmook.github.com{{ post.url }}"/>
+   <link href="http://nekle.github.com{{ post.url }}"/>
    <updated>{{ post.date | date_to_xmlschema }}</updated>
-   <id>http://hzmook.github.com{{ post.id }}</id>
+   <id>http://nekle.github.com{{ post.id }}</id>
    <content type="html">{{ post.content | xml_escape }}</content>
  </entry>
  {% endfor %}

@@ -60,4 +60,4 @@
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 .highlight .lineno{color: e0e0e0; border-right-style: groove; border-right-color:#f0f0f0; padding-right:1px;}
 
-code{color: #009999; border:1px;}
+p code{color: #009999; border:1px solid;}

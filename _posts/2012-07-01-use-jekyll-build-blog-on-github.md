@@ -124,10 +124,6 @@ Jekyll自动生成的，所以可以忽略，如果你有在本地安装Jekyll�
 
 在Windows平台上，如果出现类似如下的错误信息：
 
-<pre>
-  <code>c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.0/lib/jekyll/convertible.rb:29:in `read_yaml’: invalid byte sequence in GBK (ArgumentError)
-  ...</code>
-</pre>
 
 可能需要作如下修改：
 

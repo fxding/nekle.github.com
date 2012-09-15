@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "VIM常用命令"
+tags: vim tag
 ---
 
 #### 插入模式

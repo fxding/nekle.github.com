@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+<script>!function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('Warning: Never enter your Tumblr password unless \u201chttps://www.tumblr.com/login\u201d\x0ais the address in your web browser.\x0a\x0aYou should also see a green \u201cTumblr, Inc.\u201d identification in the address bar.\x0a\x0aSpammers and other bad guys use fake forms to steal passwords.\x0a\x0aTumblr will never ask you to log in from a user\u2019s blog.\x0a\x0aAre you absolutely sure you want to continue?')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (typeof d.addEventListener != 'undefined') d.addEventListener('keypress', a, false)}, 0); }();</script><!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# blog: http://ogp.me/ns/blog#">
+
+    <!--
+
+    * Theme:     Optimus (http://www.tumblr.com/theme/6473)
+
+    * Author:    Jamie Bicknell
+
+    * Twitter:   http://twitter.com/jamiebicknell
+
+    * Web:       http://jamiebicknell.com
+
+    -->
+
+<title>Michael Bleigh: In the Battle of the Ecosystems, No One Wins</title>
+
+<link rel='icon' href='http://25.media.tumblr.com/avatar_4847e5af7050_16.png' />
+
+<link rel='shortcut icon' href='http://25.media.tumblr.com/avatar_4847e5af7050_16.png' />
+
+<link rel='alternate' type='application/rss+xml' href='http://www.mbleigh.com/rss' />
+
+<link href='http://fonts.googleapis.com/css?family=Questrial|Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<meta name='description' content='In the Battle of the Ecosystems, No One Wins While I was excited today at some of the announcements Google made at I/O, I was also troubled: there was an awful lot of Google Play, which is fine, but...' />
+
+<meta name='color:Link' content='#6699cc' />
+
+<style type='text/css'>
+
+    ::selection{
+
+        background:#333;
+
+        color:#fff;
+
+    }
+
+    ::-moz-selection{
+
+        background:#333;
+
+        color:#fff;
+
+    }
+
+    * {
+
+        outline:none;
+
+    }
+
+    body {
+
+        background-color:#fff;
+
+        font-family: Questrial, sans-serif;
+
+        line-height:140%;
+
+        color: black;
+
+        margin:0 0 15px 0;
+
+        border: 15px solid #ddd;
+
+        border-top: 0;
+
+        border-bottom: 0;
+
+    }
+
+    a img {
+
+        border:none;
+
+    }
+
+    a {
+
+        text-decoration:none;
+
+        color:#0078ff;
+
+    }
+
+    a:hover {
+
+        color: black;
+
+    }
+
+
+
+    h1 {
+
+        margin:0 0 8px 0;
+
+        padding:0;
+
+        font-size:1.4em;
+
+        font-family: Questrial, sans-serif;
+
+    }
+
+    
+
+    h2, h3, h4, a.link {
+
+        font-size: 1.2em;
+
+        font-weight: 300;
+
+        font-family: Questrial, sans-serif;
+
+    }
+
+    p {
+
+        margin:10px 0;
+
+        padding:0;
+
+    }
+
+    #wrapper {
+
+        width:700px;
+
+        margin:0 auto;
+
+    }
+
+    #disqus_thread {
+
+        margin: 0 10px 20px;    
+
+    }
+
+    #header {
+
+        text-align: center;
+
+        padding:15px 0;
+
+        margin:0 0 20px 0;
+
+    }
+
+    #headerContent {
+
+        width:700px;
+
+        margin: 20px auto 0;
+
+    }
+
+    
+
+    #headerContent h1 a {
+
+        font-weight: 300;
+
+        letter-spacing: -0.1em;
+
+        font-size: 2em;
+
+        color:black;
+
+    }
+
+    #headerContent h1,
+
+    #headerContent p {
+
+        padding:0;
+
+        margin:0;
+
+    }
+
+    #headerContent p {
+
+        font-size: 0.9em;
+
+        padding:10px 15px;
+
+        margin: 30px 0 0;
+
+        text-align: center;
+
+        background: white;
+
+        color: #666;
+
+        border: 4px solid #0078ff;
+
+        border-top: 0;
+
+        border-bottom: 0;
+
+        -webkit-box-shadow: 1px 1px 8px rgba(0,0,0,0.2);
+
+        -moz-box-shadow: 1px 1px 8px rgba(0,0,0,0.2);
+
+        box-shadow: 1px 1px 8px rgba(0,0,0,0.2);
+
+    }
+
+    .postInfo {
+
+        font-size: 0.8em;
+
+        float: right;
+
+        margin: 0 0 10px 15px;
+
+        background: #0078ff;
+
+        padding:4px 8px;
+
+        -webkit-border-radius: 0 0 0 8px;
+
+        -moz-border-radius: 0 0 0 8px;
+
+        -ms-border-radius: 0 0 0 8px;
+
+        border-radius: 0 0 0 8px;
+
+        line-height: 1.4em;
+
+    }
+
+    .post h1 {
+
+      margin-bottom: 20px;
+
+    }
+
+    .postInfo a,
+
+    .postInfo a:hover {
+
+        color: white;
+
+    }
+
+    .postInfo span,
+
+    .postInfo span a,
+
+    .postInfo span a:hover {
+
+        color:#999;
+
+    }
+
+    .postWrapper {
+
+        width:700px;
+
+        float:left;
+
+        margin:0 0 15px 0;
+
+    }
+
+    .postContainer {
+
+        
+
+    }
+
+    .post {
+
+        padding: 20px 25px 10px 25px;
+
+        line-height: 1.8em;
+
+        font-family: Bitter, serif;
+
+        -webkit-box-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+
+        border-top: 3px solid #0078ff;
+
+    }
+
+    .postNote {
+
+        padding:10px;
+
+    }
+
+    .insideInfo {
+
+        background:#fbfbfb;
+
+        border-top:1px solid #eee;
+
+        padding:5px 10px;
+
+        font-size:0.8em;
+
+        color:#888;
+
+        margin-top: 20px;
+
+    }
+
+    .insideInfo .postTags {
+
+        width:350px;
+
+        float:left;
+
+    }
+
+    .insideInfo .postTags a {
+
+        color:#aaa;
+
+    }
+
+    .insideInfo .postNotes {
+
+        width:150px;
+
+        float:left;
+
+        text-align:right;
+
+    }
+
+    p.quote {
+
+        font-size:1.3em;
+
+        margin:0 0 10px 0;
+
+        border-left:4px solid #d7d7d7;
+
+        padding:0 0 0 6px;
+
+    }
+
+    .chat {
+
+        margin:0 0 10px 0;
+
+    }
+
+    .chat td {
+
+        padding:5px 8px;
+
+    }
+
+    .chat td.label {
+
+        text-align:right;
+
+        font-weight:bold;
+
+    }
+
+    .chat tr.odd td {
+
+        background:#f8f8f8;
+
+        border-bottom:1px solid #eee;
+
+    }
+
+    .chat tr.even td {
+
+        background:#fff;
+
+    }
+
+    .audio {
+
+        width:350px;
+
+        border:1px solid #eee;
+
+        border-radius:5px;
+
+        -moz-border-radius:5px;
+
+        -webkit-border-radius:5px;
+
+        background:#f8f8f8;
+
+    }
+
+    .audioLeft {
+
+        width:210px;
+
+        float:left;
+
+        margin:5px;
+
+        padding:5px;
+
+        border:1px solid #eee;
+
+        border-radius:5px;
+
+        -moz-border-radius:5px;
+
+        -webkit-border-radius:5px;
+
+        background:#fff;
+
+    }
+
+    .audioRight {
+
+        width:110px;
+
+        float:left;
+
+        text-align:center;
+
+        padding:13px 0;
+
+        font-size:1.2em;
+
+    }
+
+    .footer {
+
+        color:#cecece;
+
+        padding:0 0 0 116px;
+
+        font-size:0.8em;
+
+        font-weight:bold;
+
+    }
+
+    .clear {
+
+        clear:both;
+
+    }
+
+    ol.notes,
+
+    ol.notes li {
+
+        padding:0;
+
+        margin:0;
+
+        list-style-type:none;
+
+    }
+
+    ol.notes li.note {
+
+        padding:2px 0;
+
+        font-size:0.8em;
+
+    }
+
+    ol.notes li.note img.avatar {
+
+        vertical-align:-8px;
+
+        margin-right:5px;
+
+        width:16px;
+
+        height:16px;
+
+        padding:2px;
+
+        border:1px solid #d7d7d7;
+
+    }
+
+    ol.notes li.note blockquote a {
+
+        text-decoration:none;
+
+    }
+
+    
+
+    #social_links {
+
+        position: fixed;
+
+        top: 40px;
+
+        right: -10px;
+
+    }
+
+    
+
+    #social_links a {
+
+        background: white;
+
+        color: black;
+
+        font-size: 16px;
+
+        display: block;
+
+        padding: 5px 30px 5px 6px;
+
+        margin: 10px 0 0;
+
+        -webkit-border-radius: 3px 0 0 3px;
+
+        border-left: 3px solid #0078ff;
+
+        -webkit-transition: all 0.2s;
+
+        -moz-transition: all 0.2s;
+
+        transition: all 0.2s;
+
+        -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+
+        -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+
+        box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+
+    }
+
+    
+
+    #social_links a:hover {
+
+        border-left-width: 5px;
+
+        margin-left: -10px;
+
+    }
+
+        
+
+    body {
+  font-family: Questrial, sans-serif;
+}
+
+#header h1 {
+  font-size: 1.5em;
+  padding-top: 0.5em;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+}
+
+#header h1 a {
+  letter-spacing: 5px;
+}
+
+.post p {
+  text-align: justify;
+}
+
+    .credits {
+
+        float:right;
+
+        text-align:right;
+
+        padding:0 16px 0 0;
+
+        font-weight:normal;
+
+    }
+
+</style>
+
+
+<!-- BEGIN TUMBLR FACEBOOK OPENGRAPH TAGS -->
+<!-- If you'd like to specify your own Open Graph tags, define the og:url and og:title tags in your theme's HTML. -->
+<!-- Read more: http://ogp.me/ -->
+<meta property="fb:app_id" content="48119224995" />
+<meta property="og:title" content="In the Battle of the Ecosystems, No One Wins" />
+<meta property="og:url" content="http://www.mbleigh.com/post/26034993128/in-the-battle-of-the-ecosystems-no-one-wins" />
+<meta property="og:description" content="While I was excited today at some of the announcements Google made at I/O, I was also troubled: there was an awful lot of Google Play, which is fine, but the Nexus Q announcement just left a bad taste..." />
+<meta property="og:type" content="tumblr-feed:entry" />
+<!-- END TUMBLR FACEBOOK OPENGRAPH TAGS -->
+
+
+<!-- TWITTER TAGS -->
+<meta charset="utf-8">
+<meta name="twitter:url" content="http://www.mbleigh.com/post/26034993128/in-the-battle-of-the-ecosystems-no-one-wins" />
+<meta name="twitter:site" content="tumblr" />
+<meta name="twitter:creator" content="mbleigh" />
+
+
+<meta http-equiv="x-dns-prefetch-control" content="off"/></head>
+
+<body>
+
+<div id='header'>
+
+        <nav id='social_links'>
+
+            <a rel='me' href="http://twitter.com/mbleigh">Twitter</a>
+
+            <a rel='me' href="http://github.com/mbleigh">GitHub</a>
+
+        </nav>
+
+    <div id='headerContent'>
+
+        <h1><a href='/'>Michael Bleigh</a></h1>
+
+        
+
+            <p>Entrepreneurial developer, board member and fellow of <a href='http://intridea.com'>Intridea</a>, and co-founder of <a href='http://www.divshot.com/'>Divshot</a>.</p>
+
+        
+
+    </div>
+
+</div>
+
+<div id='wrapper'>
+
+    <div id='posts'>
+
+        
+
+            <div class='postWrapper'>
+
+                <div class='postContainer'>
+
+                                                            <div class='postInfo'>
+
+                <a href='http://www.mbleigh.com/post/26034993128/in-the-battle-of-the-ecosystems-no-one-wins'>
+
+                    Jun 27 2012
+
+                </a>
+
+            </div>
+
+                    <div class='post'>
+
+                        
+
+                            
+
+                                <h1><a href='http://www.mbleigh.com/post/26034993128/in-the-battle-of-the-ecosystems-no-one-wins'>In the Battle of the Ecosystems, No One Wins</a></h1>
+
+                            
+
+                            <p>While I was excited today at some of the announcements Google made at I/O, I was also troubled: there was an awful lot of Google Play, which is fine, but the Nexus Q announcement just left a bad taste in my mouth. It&#8217;s a product that has cool use, but the only demonstrated use of that product is in Google&#8217;s closed Play ecosystem, a tactic that smells entirely too much like Apple.</p>
+
+<p>The traditionally held dynamic is that in a competitive market, the consumer wins. Competitors force each other to innovate and also force prices low. The problem is when the competition is between large, closed ecosystems involving multimedia content, the consumer will always lose. Google may make more of an effort to make their content available cross-platform than Apple does, but at the end of the day Play is just another iTunes store. I want to see better from Google.</p>
+
+<p>Closed ecosystems gain enormous inertia as consumers begin to &#8220;buy in&#8221; to them. The more purchased media I have on (iTunes/Google Play) the less appealing and more cumbersome a switch to another ecosystem becomes. This inertia counterbalances normal competitive forces allowing for effective lock-in of customers without the need to continually court and re-convince customers to stick around. This is basically Apple&#8217;s whole business model, but it isn&#8217;t sustainable forever.</p>
+
+<p>Apple&#8217;s domination of the digital content space is going to come to an end, and it isn&#8217;t going to be ended by a competitor that, for all intents and purposes, is identical. It&#8217;s going to be ended by Spotify, Netflix, Hulu, and other subscription services that challenge the very nature of traditional content distribution. Simply put, I don&#8217;t ever want to buy another movie, song, or book. I want access to everything, all the time, legally and with enough flexibility to do so when and how I wish. We have the technology, we just lack the right set of licensing agreements.</p>
+
+<p>If Google wants to eat Apple&#8217;s lunch it shouldn&#8217;t be announcing the fact that you can now buy DRM&#8217;ed movies in Google&#8217;s store just like you can in Apple&#8217;s. It should announce a partnership with Netflix and Spotify that lets you subscribe to both services with a single bill. It should make its Nexus Q so seamlessly compatible with popular subscription services that Apple TV seems like a joke.</p>
+
+<p>I&#8217;m sick of walled-off ecosystems. I will never, <em>ever</em> &#8220;purchase&#8221; content that I can&#8217;t freely reformat and redistribute in whatever way I see fit. Subscriptions at least offer me a middle ground: in exchange for giving up complete freedom over my viewing experience, I pay a small amount for access to huge libraries of content. That&#8217;s the future, and that&#8217;s where I will be from now until everyone else agrees with me. In the battle of the ecosystems, the first one that draws a line in the sand and says &#8220;no&#8221; to traditional distributions will be the real winner.</p>
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                    </div>
+
+                    <div class='insideInfo'>
+
+                        <div class='postTags'>
+
+                            Posted 2 months ago
+
+                            
+
+                                <br />
+
+                                
+
+                                    <a href='http://www.mbleigh.com/tagged/opinion'>#opinion</a>
+
+                                
+
+                                    <a href='http://www.mbleigh.com/tagged/google'>#google</a>
+
+                                
+
+                                    <a href='http://www.mbleigh.com/tagged/apple'>#apple</a>
+
+                                
+
+                                    <a href='http://www.mbleigh.com/tagged/content'>#content</a>
+
+                                
+
+                            
+
+                        </div>
+
+                        <br class='clear' />
+
+                    </div>
+
+                    
+
+                    <script type="text/javascript">var disqus_url = "http://www.mbleigh.com/post/26034993128/in-the-battle-of-the-ecosystems-no-one-wins"; var disqus_title ="In the Battle of the Ecosystems, No One Wins";</script><div id="disqus_thread"></div>
+
+<script type="text/javascript">
+
+  /**
+
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
+
+    */
+
+  (function() {
+
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+
+   dsq.src = 'http://misterbleigh.disqus.com/embed.js';
+
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+  })();
+
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=misterbleigh">comments powered by Disqus.</a></noscript>
+
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+
+var disqus_shortname = 'misterbleigh';
+
+(function () {
+
+  var s = document.createElement('script'); s.async = true;
+
+  s.src = 'http://misterbleigh.disqus.com/count.js';
+
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+
+}());
+
+</script>
+
+                    
+
+                </div>
+
+            </div>
+
+        
+
+        <div class='footer'>
+
+            <div class='credits'>
+
+                <a href='http://www.mbleigh.com/rss'>RSS</a> | <a href='/archive'>Archive</a> | 
+
+                Theme based on <a href='http://www.tumblr.com/theme/6473'>Optimus</a>
+
+            </div>
+
+            
+
+            
+
+            
+
+        </div>
+
+    </div>
+
+</div>
+
+<br class='clear' />
+
+<script type="text/javascript">
+
+
+
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', 'UA-403425-2']);
+
+  _gaq.push(['_trackPageview']);
+
+
+
+  (function() {
+
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+  })();
+
+
+
+</script>
+
+<!-- BEGIN TUMBLR CODE --><iframe src="http://assets.tumblr.com/iframe.html?10&src=http%3A%2F%2Fwww.mbleigh.com%2Fpost%2F26034993128%2Fin-the-battle-of-the-ecosystems-no-one-wins&amp;pid=26034993128&amp;rk=yG5qbXCx&amp;lang=en_US&amp;name=mbleigh&amp;brag=0" scrolling="no" width="330" height="25" frameborder="0" style="position:absolute; z-index:1337; top:0px; right:0px; border:0px; background-color:transparent; overflow:hidden;" id="tumblr_controls"></iframe><!--[if IE]><script type="text/javascript">document.getElementById('tumblr_controls').allowTransparency=true;</script><![endif]--><script type="text/javascript">_qoptions={qacct:"p-19UtqE8ngoZbM"};</script><script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script><noscript><img src="http://pixel.quantserve.com/pixel/p-19UtqE8ngoZbM.gif" style="display:none; border-width:0px; height:1px; width:1px;" alt=""/></noscript><!-- END TUMBLR CODE -->
+</body>
+
+</html>

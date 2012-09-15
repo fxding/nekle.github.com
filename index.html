@@ -1,14 +1,15 @@
 ---
 layout: master
 title: 首页
-full_posts: 3
+full_posts: 5
 ---
 
 {% for post in site.posts limit:page.full_posts %}
  	 <div class="postInfo"><a href="{{post.url}}">{{post.date | date_to_string}}</a></div>
  	 <div class='post'>
     	<h1><a href='{{post.url}}'>{{post.title}}</a></h1>
-    	<div>{{post.content }}</div>
+    	<div>{{post.description }}</div>
+		<div><a href='{{post.url}}'>阅读全文...</a></div>
     	<div class='insideInfo'>
 			<div class='postTags'>
 				Tags:

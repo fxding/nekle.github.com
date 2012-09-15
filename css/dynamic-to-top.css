@@ -1,0 +1,95 @@
+body {
+	position: relative;
+}
+
+#dynamic-to-top {
+	display: none;
+	overflow: hidden;
+	width: auto;
+	z-index: 90;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	top: auto;
+	left: auto;
+	font-family: sans-serif;
+	font-size: 1em;
+	color: #fff;
+	text-decoration: none;
+	padding: 21px 19px;
+	border: 1px solid #EEEEEE;
+	background: #EEEEEE;
+	-webkit-background-origin: border;
+	-moz-background-origin: border;
+	-icab-background-origin: border;
+	-khtml-background-origin: border;
+	-o-background-origin: border;
+	background-origin: border;
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	-icab-background-clip: padding-box;
+	-khtml-background-clip: padding-box;
+	-o-background-clip: padding-box;
+	background-clip: padding-box;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	-icab-border-radius: 9px;
+	-khtml-border-radius: 9px;
+	border-radius: 9px;
+}
+
+#dynamic-to-top:hover {
+	background: #F4F5F7;
+	background: #F4F5F7
+		-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, .2)
+		), to(rgba(0, 0, 0, 0) ) );
+	background: #F4F5F7 -webkit-linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	background: #F4F5F7 -khtml-linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	background: #F4F5F7 -moz-linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	background: #F4F5F7 -o-linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	background: #F4F5F7 -ms-linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	background: #F4F5F7 -icab-linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	background: #F4F5F7 linear-gradient(top, rgba(255, 255, 255, .2),
+		rgba(0, 0, 0, 0) );
+	cursor: pointer;
+}
+
+#dynamic-to-top:active {
+	background: #EEEEEE;
+	background: #EEEEEE
+		-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, .3) ),
+		to(rgba(0, 0, 0, 0) ) );
+	background: #EEEEEE -webkit-linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+	background: #EEEEEE -moz-linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+	background: #EEEEEE -khtml-linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+	background: #EEEEEE -o-linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+	background: #EEEEEE -ms-linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+	background: #EEEEEE -icab-linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+	background: #EEEEEE linear-gradient(top, rgba(0, 0, 0, .1),
+		rgba(0, 0, 0, 0) );
+}
+
+#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover
+	{
+	outline: none;
+}
+
+#dynamic-to-top span {
+	display: block;
+	overflow: hidden;
+	width: 14px;
+	height: 12px;
+	background: url(/img/up.png) no-repeat center center;
+}

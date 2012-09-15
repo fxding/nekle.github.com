@@ -11,6 +11,10 @@ def foo
 end
 {% endhighlight %}
 
-<pre class="js" name="colorcode">
+{% highlight bash linenos %}
 $ cd ~/.ssh
-</pre>
+{%endhighlight%}
+
+<code>
+	code
+</code>

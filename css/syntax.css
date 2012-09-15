@@ -1,4 +1,17 @@
-.highlight  { background: #EDEFF0; line-height:0.4cm;}
+.highlight  {     
+	margin: 20px 10px 15px 0;
+    font-family: verdana, \9ED1\4F53, sans-serif;
+    background: #9ccbf1;
+    background: -moz-linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
+    background: -webkit-linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
+    background: -ms-linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
+    background: linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
+    border-top: 1px solid #65a5d8;
+    border-left: 1px solid #6db0e6;
+    border-right: 1px solid #6db0e6;
+    border-bottom: 1px solid #6db0e6;
+    border-radius: 3px 3px;
+}
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */
@@ -60,4 +73,4 @@
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 .highlight .lineno{color: e0e0e0; border-right-style: groove; border-right-color:#f0f0f0; padding-right:1px;}
 
-p code{color: #009999; /*border: 1px solid #eaeaea; padding:0px 5px 0px 5px; margin:0px 2px 0px 2px;*/ padding:0!important;font-size:12px!important;background-color:#eee!important;border:none!important;}
+p code{color: #009999; border: 1px solid #eaeaea; padding:0px 5px 0px 5px; margin:0px 2px 0px 2px;}

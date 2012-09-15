@@ -14,5 +14,4 @@ end
 {% highlight bash linenos %}
 $ cd ~/.ssh
 {%endhighlight%}
-
-	`code`
+`code`

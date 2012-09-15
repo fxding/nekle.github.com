@@ -286,3 +286,7 @@ body {
     padding:0 16px 0 0;
     font-weight:normal;
 }
+
+.highlight{
+	background:#123;
+}

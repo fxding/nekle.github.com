@@ -1,16 +1,17 @@
 .highlight  {     
-	margin: 20px 10px 15px 0;
-    font-family: verdana, \9ED1\4F53, sans-serif;
+	margin: 20px 10px 15px 0px;
     background: #9ccbf1;
+	/*
     background: -moz-linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
     background: -webkit-linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
     background: -ms-linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
     background: linear-gradient(-90deg, #6db0e6 0%, #8fbadd 4%, #9ccbf1 15%, #9ccbf1 100%);
-    border-top: 1px solid #65a5d8;
+    */
+	border-top: 1px solid #65a5d8;
     border-left: 1px solid #6db0e6;
     border-right: 1px solid #6db0e6;
     border-bottom: 1px solid #6db0e6;
-    border-radius: 3px 3px;
+    /*border-radius: 3px 3px;*/
 }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */

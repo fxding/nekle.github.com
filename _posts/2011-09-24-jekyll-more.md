@@ -5,7 +5,7 @@ description: 在使用 Jekyll 构建博客的过程中，我记录下了这些�
 keywords: Jekyll
 ---
 ##一些函数
-{% highlight ruby %}
+{% highlight ruby linenos%}
 def foo
   puts 'foo'
 end

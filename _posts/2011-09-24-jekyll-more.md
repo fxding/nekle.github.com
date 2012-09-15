@@ -15,6 +15,4 @@ end
 $ cd ~/.ssh
 {%endhighlight%}
 
-<code>
-	code
-</code>
+	`code`

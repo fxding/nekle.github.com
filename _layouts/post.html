@@ -19,8 +19,8 @@ layout: master
 	    {% if page.next %}
 	      <a class="next" href="{{ page.next.url }}" rel="bookmark">&#171; Newer</a>
 	    {% endif %}
-	    {% if page.next%}
-			{% if page.previous %}|{% endif %}
+	    {% if page.next and page.previous%}
+			|
 		{% endif %}
 	    {% if page.previous %}
 	    	<a class="prev" href="{{ page.previous.url }}" rel="bookmark">Older &#187;</a>

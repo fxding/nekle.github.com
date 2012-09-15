@@ -1,4 +1,4 @@
-.highlight  { background: #9ccbf1; line-height:0.4cm; font-family: Georgia, Bitter, serif;}
+.highlight  { background: #9ccbf1; line-height:0.4cm; }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */
@@ -63,7 +63,6 @@
 	border-right-style: groove; 
 	border-right-color:#f0f0f0; 
 	padding-right:1px; 
-	font-family: Georgia, Bitter, serif;
 }
 
 p code{color: #009999; border: 1px solid #eaeaea; padding:0px 5px 0px 5px; margin:0px 2px 0px 2px;}

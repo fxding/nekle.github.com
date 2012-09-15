@@ -71,7 +71,7 @@ p {
     letter-spacing: -0.1em;
     font-size: 2em;
     color:black;
-    background:#fff;
+    background:#f9f9f9;
 }
 #headerContent h1,
 #headerContent p {
@@ -286,3 +286,9 @@ body {
     padding:0 16px 0 0;
     font-weight:normal;
 }
+
+.navigation{
+	margin:3px 0px 3px 0px;
+	padding:5px 10px;
+}
+

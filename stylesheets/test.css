@@ -1,10 +1,10 @@
 ::selection{
-    background:#333;
+    background:#33A9FF;
     color:#fff;
 }
 
 ::-moz-selection{
-    background:#333;
+    background:#33A9FF;
     color:#fff;
 }
 
@@ -103,7 +103,9 @@ p {
     -ms-border-radius: 0 0 0 8px;
     border-radius: 0 0 0 8px;
     line-height: 1.4em;
+	font-family: Georgia, Bitter, serif;
 }
+
 .post h1 {
   margin-bottom: 20px;
 }
@@ -116,14 +118,17 @@ p {
 .postInfo span a:hover {
     color:#999;
 }
+
 .postWrapper {
     width:700px;
-    float:left;
-    margin:0 0 15px 0;
+    /*float:left;*/
+    margin:0px 0px 15px 0px;
     background:#fff;
 }
+
 .postContainer {
 }
+
 .post {
     padding: 20px 25px 10px 25px;
     line-height: 1.8em;
@@ -131,6 +136,33 @@ p {
     -webkit-box-shadow: 2px 2px 12px rgba(0,0,0,0.25);
     border-top: 3px solid #0078ff;
     margin:0 0 15px 0;
+}
+
+.archives{
+	padding: 20px 25px 10px 25px;
+    font-family: Bitter, serif;
+    -webkit-box-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+    border-top: 3px solid #0078ff;
+    margin:0 0 15px 0;
+	
+}
+.archive-item{
+	
+	background:#fff;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px #0078FF;
+	border-bottom-style:dashed;
+	height:20px;
+	font-family: Georgia, Bitter, serif;
+}
+.archive-item .archive-item-title{
+	float:left;
+	padding: 2px 15px 0px 15px;
+}
+.archive-item .archive-item-date{
+	float:right;
+	padding: 2px 15px 0px 15px;
 }
 
 .postNote {
@@ -207,15 +239,7 @@ p.quote {
     padding:13px 0;
     font-size:1.2em;
 }
-.footer {
-    color:#cecece;
-    padding:0 0 0 116px;
-    font-size:0.8em;
-    font-weight:bold;
-}
-.clear {
-    clear:both;
-}
+
 
 ol.notes,
 ol.notes li {
@@ -279,6 +303,17 @@ body {
 }
 .post p {
   text-align: justify;
+}
+
+.footer {
+    color:#cecece;
+    padding:0 0 0 116px;
+    font-size:0.8em;
+    font-weight:bold;
+	margin-bottom:100px;
+}
+.clear {
+    clear:both;
 }
 .credits {
     float:right;

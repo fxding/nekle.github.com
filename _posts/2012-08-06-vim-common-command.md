@@ -5,6 +5,7 @@ tags: vim tag
 ---
 
 #### 插入模式
+{% highlight bash linenos %} 
     i = insert mode at cursor
     I = insert at the beginning of line
     a = append after the cursor
@@ -12,8 +13,10 @@ tags: vim tag
     o = open blank line below current line
     O = open blank line above current line
     Esc = exit insert mode
+{% endhighlight %}
 
 #### 光标移动
+{% highlight bash linenos %} 
     h,j,k,l = ←, ↓, ↑, →
     ctrl+f = 下一页(forward)
     ctrl+b = 上一页(backward)
@@ -33,6 +36,7 @@ tags: vim tag
     `. = 跳到最后编辑的地方
     * = 向下查找当前光标所在位置的字符串
     # = 向上查找当前光标所在位置的字符串
+ {% endhighlight %} 
 
 #### 编辑
     u = undo
@@ -62,11 +66,13 @@ tags: vim tag
     N = repeat search in opposite direction
 
 #### 退出
+	{% hightlight bash linenos%}
     :w = 保存
     :wq = 保存并退出
     :x = 保存并退出
     :q = 退出，有改动未保存时退出失败
     :q! = 强制退出
+    {% endhightlight %}
 
 - - -
 [VIM CheetSheet](/images/post/vim.png)

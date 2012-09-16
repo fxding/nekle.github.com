@@ -158,6 +158,15 @@ p {
     border-top: 3px solid #0078ff;
     margin:0 0 15px 0;
 }
+.post h3 { 
+	font-size: 16px; 
+	font-weight: 700; 
+	line-height: 26px; 
+	/*color: #489620;*/ 
+	border-bottom: 1px solid #e8e8e8; 
+	margin-bottom: 18px; 
+	margin-top: 1.5em; 
+}
 
 .archives{
 	padding: 20px 25px 10px 25px;

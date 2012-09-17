@@ -4,6 +4,8 @@ title: Another hello
 description: test
 tags: Jekyll
 ---
+<script type="text/javascript" src="/js/syntax-js/shBrushJScript.js"></script>
+
 ## 这只是也个测试 `code`
 
 this is a `code` block.

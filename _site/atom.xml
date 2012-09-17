@@ -4,7 +4,7 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2012-09-17T22:44:26+08:00</updated>
+ <updated>2012-09-17T23:34:21+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
@@ -998,7 +998,10 @@ _   底线
    <link href="http://nekle.github.com/2012/09/15/another-hello.html"/>
    <updated>2012-09-15T00:00:00+08:00</updated>
    <id>http://nekle.github.com/2012/09/15/another-hello</id>
-   <content type="html">&lt;h2&gt;这只是也个测试 &lt;code&gt;code&lt;/code&gt;&lt;/h2&gt;
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushJScript.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;h2&gt;这只是也个测试 &lt;code&gt;code&lt;/code&gt;&lt;/h2&gt;
 
 &lt;p&gt;this is a &lt;code&gt;code&lt;/code&gt; block.&lt;/p&gt;
 

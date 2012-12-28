@@ -4,7 +4,7 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2012-09-17T23:34:21+08:00</updated>
+ <updated>2012-12-28T23:06:27+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
@@ -1024,23 +1024,21 @@ var appWindow = Titanium.UI.createWindow({
    <link href="http://nekle.github.com/2011/09/24/jekyll-more.html"/>
    <updated>2011-09-24T00:00:00+08:00</updated>
    <id>http://nekle.github.com/2011/09/24/jekyll-more</id>
-   <content type="html">&lt;h2&gt;一些函数&lt;/h2&gt;
-
-&lt;div&gt;
-  &lt;pre&gt;&lt;code class='ruby'&gt;def foo
-  puts 'foo'
-end&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
 
 
-
-
-&lt;div&gt;
-  &lt;pre&gt;&lt;code class='bash'&gt;$ cd ~/.ssh&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
+&lt;h2&gt;一些函数&lt;/h2&gt;
 
 &lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+int main(){
+
+    return 0;
+}
+
+&lt;/pre&gt;
+
 </content>
  </entry>
  

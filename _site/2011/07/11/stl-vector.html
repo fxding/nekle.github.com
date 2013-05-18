@@ -3,7 +3,7 @@
 <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Output Iterator</title>
+    <title>STL-Vector 内部结构</title>
     <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
      
     <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
@@ -67,79 +67,82 @@
       <div class='postWrapper'>
 		<div class='postContainer'>
 			<div>
-  	<div class="postInfo"> <a href="/2011/03/28/%28STL%29Output-Iterator.html">28 Mar 2011</a></div>
+  	<div class="postInfo"> <a href="/2011/07/11/stl-vector.html">11 Jul 2011</a></div>
    	<div class="post">
-    <h1><a href=''>Output Iterator</a></h1>
+    <h1><a href=''>STL-Vector 内部结构</a></h1>
     <script type="text/javascript" src="/js/syntax-js/shBrushCpp.js"></script>
 
 
-<p>2011年3月28日
-15:22</p>
+<p>2011年7月11日
+16:00</p>
 
-<h2>应用：copy</h2>
+<h3>一、vector结构</h3>
 
-<pre class="brush: cpp">
-template < class InputIterator, class OutputIterator>
-OutputIterator copy(InputIerator first, InputIerator last, OutputIterator result)
-{
-    for (; first != last; ++result, ++first)
-        *result = *first;
-    return result;
-}
-</pre>
+<blockquote><p>vector是一个顺序存储容器，内部使用动态数组实现。支持元素的随机访问，所以只要知道位置，就可以在常数时间内存取该元素。在末尾插入和删除元素时，vector的性能很好，可以在常数时间内完成。如果实在前段或中部插入或删除元素，性能很差，需在线性时间内完成，因为动作点之后的每一个元素都必须移动，每一次都必须调用赋值运算。</p>
 
+<p><img src="http://farm9.staticflickr.com/8130/8748723621_8399faf990.jpg" alt="img" /></p></blockquote>
 
-<h2>Concept：</h2>
+<h3>二、空间管理</h3>
 
 <ul>
-<li>①复制（参数传入）和赋值（<code>*result=*first</code>）；</li>
-<li>②可累加（<code>++result</code>），表达式<code>++p</code>与<code>p++</code>有意义；</li>
-<li>③single-pass（单回），只写性（可以<code>*p=x</code>，但不能<code>x=*p</code>）；</li>
-<li>④不提供比较（!=、==、&lt;、>）</li>
-<li>⑤</li>
+<li>1、 初始换空间分配
+
+<ul>
+<li>a、默认请况下，空间分配为0.（第一次插入空间变为 1 ）</li>
+<li>b、可设定空间大下和初始化值。<code>Vector(10, "a")</code>；</li>
+</ul>
+</li>
+<li>2、空间不足
+
+<ul>
+<li>a、当空间不足时，重新申请一个原来2倍的空间，拷贝原来的值，然后析构原来的空间(若空间分配失败，则析构已分配的空间，rollback)</li>
+</ul>
+</li>
+<li>3、若想减少空间，可利用swap函数，但效率低下。</li>
 </ul>
 
 
-<h2>例：ostream_itertor</h2>
+<h3>三、具体动作空间管理</h3>
 
-<pre class="brush:cpp">
-// 这是一个output iterator，能够将对象格式化输出到某个 basic_ostream 上。
-// 注意，此版本为旧有之 HP 规格，未符合标准接口：
-// ostream_iterator< T, char T, traits>
-// 然而一般使用output iterators 时都只使用第一个template 参数，此时以下仍适用。
-// 注：SGI STL 3.3已实作出符合标准接口的 ostream_iterator。作法与本版大同小异。
-// 本版可读性较高。
-template < class T>
-class ostream_iterator {
-protected:
-  ostream* stream;
-  const char* string;        // 每次输出后的间隔符号。
-public:
-  typedef output_iterator_tag     iterator_category;
-  typedef void                    value_type;
-  typedef void                    difference_type;
-  typedef void                    pointer;
-  typedef void                    reference;
- 
-  // 下面这些ctors 使 istream_iterator 和某个 istream object 系结起来。
-  ostream_iterator(ostream& s) : stream(&s), string(0) {}
-  ostream_iterator(ostream& s, const char* c) : stream(&s), string(c)  {}
-  // 以上 ctors 的用法：
-  //  ostream_iterator< int> outiter(cout, ' ');  输出至 cout，每次间隔一个空格
- 
-  // 对迭代器做赋值（assign）动作，就代表要输出一笔数据
-  ostream_iterator< T>& operator=(const T& value) {
-    *stream << value;                // 先输出数值
-    if (string) *stream << string;    // 如果状态无误，再输出间隔符号
-    return *this;
-  }
-  ostream_iterator< T>& operator*() { return *this; }
-  ostream_iterator< T>& operator++() { return *this; }
-  ostream_iterator< T>& operator++(int) { return *this; }
-};
- 
- </pre>
+<ul>
+<li>1、重分配空间大小<code>reserve(size_type n)</code>，若n大于现在空间则重新申请空间，将数据拷贝到新空间，并设置iterator信息，否则不做处理。</li>
+<li>2、管理数据数量<code>resize(size_type new_size, const T&amp; x)</code>，若new_size小于现在数据size则析构多余数据，否则用x补够数据。</li>
+<li>3、<code>clear</code>析构所有数据空间</li>
+</ul>
 
+
+<h3>四、动作与相关型别失效</h3>
+
+<ul>
+<li>1、插入和删除元素，都会使动作点之后的元素的references、pointers、iterators失效，如果插入动作会引起空间大小重新分配，那么该容器上的所有references、pointers、iterators都会失效。</li>
+<li>2、<code>swap</code>则所有references、pointers、iterators都会失效。</li>
+<li>3、</li>
+</ul>
+
+
+<h3>二、相关型别</h3>
+
+<p> <pre class="brush: cpp">
+// 以下标示(1),(2),(3),(4),(5)，代表 iterator_traits&lt; I> 所服务的5个型别。
+  typedef T value_type;                     //  (1)
+  typedef value_type<em> pointer;          //  (2)
+  typedef const value_type</em> const_pointer;
+  typedef const value_type<em> const_iterator;
+  typedef value_type&amp; reference;            // (3)
+  typedef const value_type&amp; const_reference;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;        // (4)
+  // 以下，由于vector 所维护的是一个连续线性空间，所以不论其元素型别为何，
+  // 原生指标都可以做为其迭代器而满足所有需求。
+  typedef value_type</em> iterator;
+  // 根据上述写法，如果客端写出这样的码：
+  // vector&lt; Shape>::iterator is;
+  // is 的型别其实就是Shape*
+  // 而STL 内部运用 iterator_traits&lt; is>::reference 时，获得Shape&amp;
+  // 运用iterator_traits&lt; is>::iterator_category 时，获得
+  // random_access_iterator_tag        (5)
+  // (此乃iterator_traits 针对原生指标的特化结果)
+ </pre></p>
  	
     </div>	
        <div class='insideInfo'>
@@ -148,25 +151,27 @@ public:
 				
 			 	<a href="#">#STL</a>
 			 	
+			 	<a href="#">#Vector</a>
+			 	
 		</div>
 	</div>
 	<div class="navigation" style="float:left">
 	    
-	      <a class="next" href="/2011/07/11/stl-deque.html" rel="bookmark">&#171; Newer</a>
+	      <a class="next" href="/2011/07/13/stl-list.html" rel="bookmark">&#171; Newer</a>
 	    
 	    
 			|
 		
 	    
-	    	<a class="prev" href="/2011/03/27/%28STL%29Input-Iterator.html" rel="bookmark">Older &#187;</a>
+	    	<a class="prev" href="/2011/07/11/stl-deque.html" rel="bookmark">Older &#187;</a>
 	    
   	</div>
 	
 	
 <br class='clear' />
 <script type="text/javascript" charset="utf-8">
-  var disqus_url = "http://nekle.github.com/2011/03/28/%28STL%29Output-Iterator.html";
-  var disqus_title= "Output Iterator";
+  var disqus_url = "http://nekle.github.com/2011/07/11/stl-vector.html";
+  var disqus_title= "STL-Vector 内部结构";
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">

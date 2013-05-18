@@ -3,7 +3,7 @@
 <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Output Iterator</title>
+    <title>STL Deque 内部结构</title>
     <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
      
     <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
@@ -67,78 +67,99 @@
       <div class='postWrapper'>
 		<div class='postContainer'>
 			<div>
-  	<div class="postInfo"> <a href="/2011/03/28/%28STL%29Output-Iterator.html">28 Mar 2011</a></div>
+  	<div class="postInfo"> <a href="/2011/07/11/stl-deque.html">11 Jul 2011</a></div>
    	<div class="post">
-    <h1><a href=''>Output Iterator</a></h1>
+    <h1><a href=''>STL Deque 内部结构</a></h1>
     <script type="text/javascript" src="/js/syntax-js/shBrushCpp.js"></script>
 
 
-<p>2011年3月28日
-15:22</p>
+<p>2011年7月11日
+19:51</p>
 
-<h2>应用：copy</h2>
+<h3>一、Deque结构</h3>
 
-<pre class="brush: cpp">
-template < class InputIterator, class OutputIterator>
-OutputIterator copy(InputIerator first, InputIerator last, OutputIterator result)
-{
-    for (; first != last; ++result, ++first)
-        *result = *first;
-    return result;
-}
-</pre>
+<blockquote><p><img src="http://farm9.staticflickr.com/8113/8749903448_4768e8a6cf.jpg" alt="img" /></p></blockquote>
 
-
-<h2>Concept：</h2>
+<h3>二、空间管理</h3>
 
 <ul>
-<li>①复制（参数传入）和赋值（<code>*result=*first</code>）；</li>
-<li>②可累加（<code>++result</code>），表达式<code>++p</code>与<code>p++</code>有意义；</li>
-<li>③single-pass（单回），只写性（可以<code>*p=x</code>，但不能<code>x=*p</code>）；</li>
-<li>④不提供比较（!=、==、&lt;、>）</li>
-<li>⑤</li>
+<li>1、初始空间分配
+    初始分配map空间为所需max(8, need_node+2)，start和finish都从中间向两边扩展。先分配map，然后分配各个node的缓冲区。若分配失败，则全部析构。</li>
+<li>2、空间不足
+    重新分配map大小，start和finish同样从中间向两边扩展，将原来map数据拷贝到新map中，释放原来map空间。设置start和finish迭代器信息。</li>
 </ul>
 
 
-<h2>例：ostream_itertor</h2>
+<h3>三、具体动作空间管理</h3>
 
-<pre class="brush:cpp">
-// 这是一个output iterator，能够将对象格式化输出到某个 basic_ostream 上。
-// 注意，此版本为旧有之 HP 规格，未符合标准接口：
-// ostream_iterator< T, char T, traits>
-// 然而一般使用output iterators 时都只使用第一个template 参数，此时以下仍适用。
-// 注：SGI STL 3.3已实作出符合标准接口的 ostream_iterator。作法与本版大同小异。
-// 本版可读性较高。
-template < class T>
-class ostream_iterator {
-protected:
-  ostream* stream;
-  const char* string;        // 每次输出后的间隔符号。
-public:
-  typedef output_iterator_tag     iterator_category;
-  typedef void                    value_type;
-  typedef void                    difference_type;
-  typedef void                    pointer;
-  typedef void                    reference;
+<ul>
+<li>1、在开始或末尾位置push，空间不足。使用map扩展，并在开始或末尾创建新缓冲区。</li>
+<li>2、在中间insert，比较pos前后移动元素开销，移动元素后插入待插元素。</li>
+<li>3、在开始或末尾位置pop，若一个缓冲区已经没有元素则将该缓冲区释放。</li>
+<li>4、erase某位置元素，比较前后元素移动开销，直接移动，并释放端点元素。</li>
+<li>5、erase某个区间，同上。</li>
+<li>6、clear空间，先释放缓冲区元素，在释放缓冲区，最后保留一个缓冲区。</li>
+</ul>
+
+
+<h3>四、具体动作产生的指针影响</h3>
+
+<ul>
+<li>1、除了在头尾两端，插入或删除元素不会引起指向其他元素的pointers、 references、 iterators失效外。在任何其他地方插入和删除元素都有可能引起指向其他元素的pointers、 references、iterators失效</li>
+</ul>
+
+
+<h3>五、相关型别</h3>
+
+<ul>
+<li>1、自定义Iterator</li>
+</ul>
+
+
+<pre class="brush: cpp">
+ // 未继承std::iterator，所以必须自行撰写五个必要的迭代器相应型别
+  typedef random_access_iterator_tag iterator_category; // (1)
+  typedef T value_type;                 // (2)
+  typedef Ptr pointer;                 // (3)
+  typedef Ref reference;                 // (4)
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;     // (5)
+  typedef T ** map_pointer;
+  typedef __deque_iterator self;
+  // 保持与容器的联结
+  T* cur;    // 此迭代器所指之缓冲区中的现行（current）元素
+  T* first;    // 此迭代器所指之缓冲区的头
+  T* last;    // 此迭代器所指之缓冲区的尾（含备用空间）
+     map_pointer node; // 当前缓冲器
+</pre>
+
+
+<p></p>
+
+<ul>
+<li>2、Deque相关型别</li>
+</ul>
+
+
+<pre class="brush: cpp">          
+public:                        // Basic types
+  typedef T value_type;
+  typedef value_type* pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type& reference;
+  typedef const value_type& const_reference;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;
  
-  // 下面这些ctors 使 istream_iterator 和某个 istream object 系结起来。
-  ostream_iterator(ostream& s) : stream(&s), string(0) {}
-  ostream_iterator(ostream& s, const char* c) : stream(&s), string(c)  {}
-  // 以上 ctors 的用法：
-  //  ostream_iterator< int> outiter(cout, ' ');  输出至 cout，每次间隔一个空格
- 
-  // 对迭代器做赋值（assign）动作，就代表要输出一笔数据
-  ostream_iterator< T>& operator=(const T& value) {
-    *stream << value;                // 先输出数值
-    if (string) *stream << string;    // 如果状态无误，再输出间隔符号
-    return *this;
-  }
-  ostream_iterator< T>& operator*() { return *this; }
-  ostream_iterator< T>& operator++() { return *this; }
-  ostream_iterator< T>& operator++(int) { return *this; }
-};
- 
- </pre>
+public:                         // Iterators
+ #ifndef __STL_NON_TYPE_TMPL_PARAM_BUG
+  typedef __deque_iterator< T, T&, T*, BufSiz> iterator;
+  typedef __deque_iterator< T, const T&, const T&, BufSiz>  const_iterator;
+ #else / * __STL_NON_TYPE_TMPL_PARAM_BUG * /
+typedef __deque_iterator< T, T&, T*> iterator;
+  typedef __deque_iterator< T, const T&, const T*> const_iterator;
+ #endif /* __STL_NON_TYPE_TMPL_PARAM_BUG */
+</pre>
 
  	
     </div>	
@@ -148,25 +169,27 @@ public:
 				
 			 	<a href="#">#STL</a>
 			 	
+			 	<a href="#">#Deque</a>
+			 	
 		</div>
 	</div>
 	<div class="navigation" style="float:left">
 	    
-	      <a class="next" href="/2011/07/11/stl-deque.html" rel="bookmark">&#171; Newer</a>
+	      <a class="next" href="/2011/07/11/stl-vector.html" rel="bookmark">&#171; Newer</a>
 	    
 	    
 			|
 		
 	    
-	    	<a class="prev" href="/2011/03/27/%28STL%29Input-Iterator.html" rel="bookmark">Older &#187;</a>
+	    	<a class="prev" href="/2011/03/28/%28STL%29Output-Iterator.html" rel="bookmark">Older &#187;</a>
 	    
   	</div>
 	
 	
 <br class='clear' />
 <script type="text/javascript" charset="utf-8">
-  var disqus_url = "http://nekle.github.com/2011/03/28/%28STL%29Output-Iterator.html";
-  var disqus_title= "Output Iterator";
+  var disqus_url = "http://nekle.github.com/2011/07/11/stl-deque.html";
+  var disqus_title= "STL Deque 内部结构";
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">

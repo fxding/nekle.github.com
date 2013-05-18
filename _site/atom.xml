@@ -4,7 +4,7 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2013-05-18T11:03:26+08:00</updated>
+ <updated>2013-05-18T12:58:01+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
@@ -1034,6 +1034,514 @@ _   底线
 &lt;/table&gt;
 
 
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>STL Map/MultiMap</title>
+   <link href="http://nekle.github.com/2011/07/14/stl-map%3Amultimap.html"/>
+   <updated>2011-07-14T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2011/07/14/stl-map:multimap</id>
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;2011年7月14日
+9:38&lt;/p&gt;
+
+&lt;h3&gt;一、空间结构&lt;/h3&gt;
+
+&lt;blockquote&gt;&lt;p&gt;map和multimap将key-value pair当做元素，进行管理。它们可根据key的排序准则将元素排序。multimap允许元素重复，map不允许。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;它们内部都采用rb_tree实现&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;blockquote&gt;&lt;p&gt;&lt;img src=&quot;http://farm9.staticflickr.com/8139/8749903444_ca65feb22d.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;二、空间管理&lt;/h3&gt;
+
+&lt;blockquote&gt;&lt;p&gt;参见rb_tree&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;三、map与multimap比较&lt;/h3&gt;
+
+&lt;p&gt;   参见set与multiset比较，不同在于map与multimap如果value_type 不是const的则可修改value值。&lt;/p&gt;
+
+&lt;h3&gt;四、相关型别&lt;/h3&gt;
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+public:
+ 
+  // typedefs:
+ 
+  typedef Key key_type;           // 键值型别
+  typedef T data_type;            // 资料（真值）型别
+  typedef T mapped_type;          // (未被使用)
+  typedef pair&lt; const Key, T&gt; value_type;    // 元素型别（键值/真值）
+  typedef Compare key_compare;    // 键值比较函式
+ 
+private:
+  // 以下定义表述型别（representation type）。以map元素型别（一个pair）
+  // 的第一型别，做为RB-tree节点的键值型别。
+  typedef rb_tree&lt; key_type, value_type,
+                  select1st&lt; value_type&gt;, key_compare, Alloc&gt; rep_type;
+  rep_type t;  // 以红黑树（RB-tree）表现 map
+public:
+  typedef typename rep_type::pointer pointer;
+  typedef typename rep_type::const_pointer const_pointer;
+  typedef typename rep_type::reference reference;
+  typedef typename rep_type::const_reference const_reference;
+  typedef typename rep_type::iterator iterator;
+  // 注意上一行，为什么不像set一样地将iterator 定义为 RB-tree 的 const_iterator？
+  // 按说map 的元素有一定次序安排，不允许使用者在任意处做写入动作，因此
+  // 迭代器应该无法执行写入动作才是。
+  typedef typename rep_type::const_iterator const_iterator;
+  typedef typename rep_type::reverse_iterator reverse_iterator;
+  typedef typename rep_type::const_reverse_iterator const_reverse_iterator;
+  typedef typename rep_type::size_type size_type;
+  typedef typename rep_type::difference_type difference_type;
+
+
+&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>STL Set/MultiSet 内部结构</title>
+   <link href="http://nekle.github.com/2011/07/13/stl-set%3Amultiset.html"/>
+   <updated>2011-07-13T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2011/07/13/stl-set:multiset</id>
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;2011年7月13日
+21:39&lt;/p&gt;
+
+&lt;h3&gt;一、空间结构&lt;/h3&gt;
+
+&lt;p&gt;set和multiset都是采用rb_tree实现，内部方法都是调用的rb_tree方法。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;抽象结构：&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;blockquote&gt;&lt;p&gt;&lt;img src=&quot;http://farm9.staticflickr.com/8551/8749903434_c6a8325423.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;二、空间管理&lt;/h3&gt;
+
+&lt;blockquote&gt;&lt;p&gt;参见rb_tree&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;三、set与multiset比较&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;相同点：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、采用rb_tree实现&lt;/li&gt;
+&lt;li&gt;2、只允许插入和删除操作，修改是不允许的(iterator为const类型)&lt;/li&gt;
+&lt;li&gt;3、提供接口完全相同。&lt;/li&gt;
+&lt;li&gt;4、若要修改元素值，必须先删除原来的值插入新值。&lt;/li&gt;
+&lt;li&gt;5、元素都是排好序的，所以修改元素值排序会被破坏。&lt;/li&gt;
+&lt;li&gt;6、移除等值元素erase(value)，移除所有等于value的元素。(list 用remove(value))&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;strong&gt;不同点：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、set中元素不允许重复，而multiset中元素允许重复。&lt;/li&gt;
+&lt;li&gt;2、插入时set采用insert_unique，而multiset采用insert_equal&lt;/li&gt;
+&lt;li&gt;3、插入返回值不同，set由于不允许元素重复，所以要么成功要么失败；而multiset则允许元素重复&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;em&gt;注意：&lt;/em&gt;其中pos_hint只是一个位置提示，它可以提升插入性能，也是为了提供一种统一的接口。&lt;/p&gt;
+
+&lt;h3&gt;四、具体动作对指针影响&lt;/h3&gt;
+
+&lt;p&gt;   参见rb_tree&lt;/p&gt;
+
+&lt;h3&gt;五、相关型别&lt;/h3&gt;
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+public:
+  // typedefs:
+ 
+  typedef Key key_type;
+  typedef Key value_type;
+  // 注意，以下 key_compare 和 value_compare 使用相同的比较函式
+  typedef Compare key_compare;
+  typedef Compare value_compare;
+ 
+private:
+  /* 注意，identity 定义于 &lt; stl_function.h&gt;，参见第7章，其定义为：
+    template &lt; class T&gt;
+    struct identity : public unary_function&lt; T, T&gt; {
+      const T&amp; operator()(const T&amp; x) const { return x; }
+    };
+  */
+  // 以下，rb_tree&lt; Key, Value, KeyOfValue, Compare, Alloc&gt;
+  typedef rb_tree&lt; key_type, value_type,
+                     identity&lt; value_type&gt;, key_compare, Alloc&gt; rep_type;
+  rep_type t;  // 采用红黑树（RB-tree）来表现 set
+public:
+  typedef typename rep_type::const_pointer pointer;
+  typedef typename rep_type::const_pointer const_pointer;
+  typedef typename rep_type::const_reference reference;
+  typedef typename rep_type::const_reference const_reference;
+  typedef typename rep_type::const_iterator iterator;
+  // 注意上一行，iterator 定义为 RB-tree 的 const_iterator，这表示 set 的
+  // 迭代器无法执行写入动作。这是因为 set 的元素有一定次序安排，
+  // 不允许使用者在任意处做写入动作。
+  typedef typename rep_type::const_iterator const_iterator;
+  typedef typename rep_type::const_reverse_iterator reverse_iterator;
+  typedef typename rep_type::const_reverse_iterator const_reverse_iterator;
+  typedef typename rep_type::size_type size_type;
+  typedef typename rep_type::difference_type difference_type;
+
+&lt;/pre&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>STL List 内部结构</title>
+   <link href="http://nekle.github.com/2011/07/13/stl-list.html"/>
+   <updated>2011-07-13T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2011/07/13/stl-list</id>
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;2011年7月13日
+15:17&lt;/p&gt;
+
+&lt;h3&gt;一、空间结构&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、结点结构&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+//串行节点结构。这是一个双向串行
+template &lt; class T&gt;
+struct __list_node {
+  typedef void* void_pointer;
+  void_pointer next;  // 型别为 void * 。其实可设为 __list_node&lt; T&gt;*
+  void_pointer prev;
+  T data;
+};
+ &lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;2、链表结构&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;img src=&quot;http://farm9.staticflickr.com/8117/8749903442_d3d81ccb33.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;二、存储管理&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、初始化时，分配空节点node，让其next和prev指针指向自身。&lt;/li&gt;
+&lt;li&gt;2、push_back和push_front总是调用的insert插入pos前面。&lt;/li&gt;
+&lt;li&gt;3、insert总是创建一个结点连接到pos之前。&lt;/li&gt;
+&lt;li&gt;4、erase删除结点后，先释放结点中数据，再释放释放结点。&lt;/li&gt;
+&lt;li&gt;5、clear释放所有结点，只保留node结点，list处于初始状态。(只有node结点的双向环)&lt;/li&gt;
+&lt;li&gt;6、两list做swap，只交换node指针。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;三、各动作对指针的影响&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、插入和删除动作都不会造成指向其他元素的pointers、references、iterators 失效。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;四、List排序&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;采用归并排序：&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;      
+// list 不能使用STL 算法 sort()，必须使用自己的 sort() member function，
+// 因为STL算法sort() 只接受RamdonAccessIterator.
+
+template &lt; class T, class Alloc&gt;
+void list&lt; T, Alloc&gt;::sort() {
+    // 以下判断，如果是空白串行，或仅有一个元素，就不做任何动作。
+    // 使用 size() == 0 || size() == 1 来判断，虽然也可以，但是比较慢。
+    if (node-&gt;next == node || link_type(node-&gt;next)-&gt;next == node) return;
+ 
+    // 一些新的 lists，做为中介数据存放区
+    list&lt; T, Alloc&gt; carry;
+    list&lt; T, Alloc&gt; counter[64];
+    int fill = 0;
+    while (!empty()) {
+        carry.splice(carry.begin(), *this, begin());// 移动一个元素到carry上
+        int i = 0;
+        while(i &lt; fill &amp;&amp; !counter[i].empty()) {
+            counter[i].merge(carry);
+            carry.swap(counter[i++]);
+        }
+        carry.swap(counter[i]);
+        if (i == fill) ++fill;
+    }
+    // 遍历counter将结果最终归并到counter[fill-1]上
+    for (int i = 1; i &lt; fill; ++i) counter[i].merge(counter[i-1]);
+    swap(counter[fill-1]);
+ }
+&lt;/pre&gt;
+
+
+&lt;h3&gt;五、相关型别&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、Iterator相关型别&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+
+// 串行专属迭代器。既然撰写串行迭代器避免不了要曝露串行的实作细节，
+// 那么就让串行和串行迭代器一起设计好了。
+template&lt; class T, class Ref, class Ptr&gt;
+struct __list_iterator { // 未继承 std::iterator
+  typedef __list_iterator&lt; T, T&amp;, T*&gt;             iterator;
+  typedef __list_iterator&lt; T, const T&amp;, const T*&gt; const_iterator;
+  typedef __list_iterator&lt; T, Ref, Ptr&gt;           self;
+ 
+  // 未继承std::iterator，所以必须自行撰写五个必要的迭代器相应型别
+  typedef bidirectional_iterator_tag iterator_category;     // (1)
+  typedef T value_type;              // (2)
+  typedef Ptr pointer;               // (3)
+  typedef Ref reference;             // (4)
+  typedef __list_node&lt; T&gt;* link_type;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type; // (5)
+ 
+  link_type node;  // 保持与容器的联结
+ &lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;2、List相关型别&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+public:     
+  typedef T value_type;
+  typedef value_type* pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type&amp; reference;
+  typedef const value_type&amp; const_reference;
+  typedef list_node* link_type;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;
+ 
+public:
+  // 当客端定义一个list&lt; T&gt;::iterator 对象，例如 list&lt; T&gt;::iterator，
+  // 便唤起__list_iterator&lt; T, T&amp;, T*&gt; 的 ctor。
+  // 如果有初值，便会因此设定一个迭代器对容器的联结关系。
+  typedef __list_iterator&lt; T, T&amp;, T*&gt;             iterator;
+  typedef __list_iterator&lt; T, const T&amp;, const T*&gt; const_iterator;
+protected:
+  // 从实作细节看来，本 list 只维护一个节点指标，指向最后（尾）节点的下一位置。
+  // 由于这是一个环状双向串行，因此，欲对外供应头节点或尾节点，都十分容易，
+  // 见 front(), back()。
+  link_type node; // 永远指向最后节点的下一节点。该节点无元素值，代表空节点。
+  // 其 next 节点永远是头节点。
+
+&lt;/pre&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>STL-Vector 内部结构</title>
+   <link href="http://nekle.github.com/2011/07/11/stl-vector.html"/>
+   <updated>2011-07-11T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2011/07/11/stl-vector</id>
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;2011年7月11日
+16:00&lt;/p&gt;
+
+&lt;h3&gt;一、vector结构&lt;/h3&gt;
+
+&lt;blockquote&gt;&lt;p&gt;vector是一个顺序存储容器，内部使用动态数组实现。支持元素的随机访问，所以只要知道位置，就可以在常数时间内存取该元素。在末尾插入和删除元素时，vector的性能很好，可以在常数时间内完成。如果实在前段或中部插入或删除元素，性能很差，需在线性时间内完成，因为动作点之后的每一个元素都必须移动，每一次都必须调用赋值运算。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm9.staticflickr.com/8130/8748723621_8399faf990.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;二、空间管理&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、 初始换空间分配
+
+&lt;ul&gt;
+&lt;li&gt;a、默认请况下，空间分配为0.（第一次插入空间变为 1 ）&lt;/li&gt;
+&lt;li&gt;b、可设定空间大下和初始化值。&lt;code&gt;Vector(10, &quot;a&quot;)&lt;/code&gt;；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;2、空间不足
+
+&lt;ul&gt;
+&lt;li&gt;a、当空间不足时，重新申请一个原来2倍的空间，拷贝原来的值，然后析构原来的空间(若空间分配失败，则析构已分配的空间，rollback)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;3、若想减少空间，可利用swap函数，但效率低下。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;三、具体动作空间管理&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、重分配空间大小&lt;code&gt;reserve(size_type n)&lt;/code&gt;，若n大于现在空间则重新申请空间，将数据拷贝到新空间，并设置iterator信息，否则不做处理。&lt;/li&gt;
+&lt;li&gt;2、管理数据数量&lt;code&gt;resize(size_type new_size, const T&amp;amp; x)&lt;/code&gt;，若new_size小于现在数据size则析构多余数据，否则用x补够数据。&lt;/li&gt;
+&lt;li&gt;3、&lt;code&gt;clear&lt;/code&gt;析构所有数据空间&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;四、动作与相关型别失效&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、插入和删除元素，都会使动作点之后的元素的references、pointers、iterators失效，如果插入动作会引起空间大小重新分配，那么该容器上的所有references、pointers、iterators都会失效。&lt;/li&gt;
+&lt;li&gt;2、&lt;code&gt;swap&lt;/code&gt;则所有references、pointers、iterators都会失效。&lt;/li&gt;
+&lt;li&gt;3、&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;二、相关型别&lt;/h3&gt;
+
+&lt;p&gt; &lt;pre class=&quot;brush: cpp&quot;&gt;
+// 以下标示(1),(2),(3),(4),(5)，代表 iterator_traits&amp;lt; I&gt; 所服务的5个型别。
+  typedef T value_type;                     //  (1)
+  typedef value_type&lt;em&gt; pointer;          //  (2)
+  typedef const value_type&lt;/em&gt; const_pointer;
+  typedef const value_type&lt;em&gt; const_iterator;
+  typedef value_type&amp;amp; reference;            // (3)
+  typedef const value_type&amp;amp; const_reference;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;        // (4)
+  // 以下，由于vector 所维护的是一个连续线性空间，所以不论其元素型别为何，
+  // 原生指标都可以做为其迭代器而满足所有需求。
+  typedef value_type&lt;/em&gt; iterator;
+  // 根据上述写法，如果客端写出这样的码：
+  // vector&amp;lt; Shape&gt;::iterator is;
+  // is 的型别其实就是Shape*
+  // 而STL 内部运用 iterator_traits&amp;lt; is&gt;::reference 时，获得Shape&amp;amp;
+  // 运用iterator_traits&amp;lt; is&gt;::iterator_category 时，获得
+  // random_access_iterator_tag        (5)
+  // (此乃iterator_traits 针对原生指标的特化结果)
+ &lt;/pre&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>STL Deque 内部结构</title>
+   <link href="http://nekle.github.com/2011/07/11/stl-deque.html"/>
+   <updated>2011-07-11T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2011/07/11/stl-deque</id>
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;2011年7月11日
+19:51&lt;/p&gt;
+
+&lt;h3&gt;一、Deque结构&lt;/h3&gt;
+
+&lt;blockquote&gt;&lt;p&gt;&lt;img src=&quot;http://farm9.staticflickr.com/8113/8749903448_4768e8a6cf.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;二、空间管理&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、初始空间分配
+    初始分配map空间为所需max(8, need_node+2)，start和finish都从中间向两边扩展。先分配map，然后分配各个node的缓冲区。若分配失败，则全部析构。&lt;/li&gt;
+&lt;li&gt;2、空间不足
+    重新分配map大小，start和finish同样从中间向两边扩展，将原来map数据拷贝到新map中，释放原来map空间。设置start和finish迭代器信息。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;三、具体动作空间管理&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、在开始或末尾位置push，空间不足。使用map扩展，并在开始或末尾创建新缓冲区。&lt;/li&gt;
+&lt;li&gt;2、在中间insert，比较pos前后移动元素开销，移动元素后插入待插元素。&lt;/li&gt;
+&lt;li&gt;3、在开始或末尾位置pop，若一个缓冲区已经没有元素则将该缓冲区释放。&lt;/li&gt;
+&lt;li&gt;4、erase某位置元素，比较前后元素移动开销，直接移动，并释放端点元素。&lt;/li&gt;
+&lt;li&gt;5、erase某个区间，同上。&lt;/li&gt;
+&lt;li&gt;6、clear空间，先释放缓冲区元素，在释放缓冲区，最后保留一个缓冲区。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;四、具体动作产生的指针影响&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、除了在头尾两端，插入或删除元素不会引起指向其他元素的pointers、 references、 iterators失效外。在任何其他地方插入和删除元素都有可能引起指向其他元素的pointers、 references、iterators失效&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;五、相关型别&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1、自定义Iterator&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+ // 未继承std::iterator，所以必须自行撰写五个必要的迭代器相应型别
+  typedef random_access_iterator_tag iterator_category; // (1)
+  typedef T value_type;                 // (2)
+  typedef Ptr pointer;                 // (3)
+  typedef Ref reference;                 // (4)
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;     // (5)
+  typedef T ** map_pointer;
+  typedef __deque_iterator self;
+  // 保持与容器的联结
+  T* cur;    // 此迭代器所指之缓冲区中的现行（current）元素
+  T* first;    // 此迭代器所指之缓冲区的头
+  T* last;    // 此迭代器所指之缓冲区的尾（含备用空间）
+     map_pointer node; // 当前缓冲器
+&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2、Deque相关型别&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;          
+public:                        // Basic types
+  typedef T value_type;
+  typedef value_type* pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type&amp; reference;
+  typedef const value_type&amp; const_reference;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference_type;
+ 
+public:                         // Iterators
+ #ifndef __STL_NON_TYPE_TMPL_PARAM_BUG
+  typedef __deque_iterator&lt; T, T&amp;, T*, BufSiz&gt; iterator;
+  typedef __deque_iterator&lt; T, const T&amp;, const T&amp;, BufSiz&gt;  const_iterator;
+ #else / * __STL_NON_TYPE_TMPL_PARAM_BUG * /
+typedef __deque_iterator&lt; T, T&amp;, T*&gt; iterator;
+  typedef __deque_iterator&lt; T, const T&amp;, const T*&gt; const_iterator;
+ #endif /* __STL_NON_TYPE_TMPL_PARAM_BUG */
+&lt;/pre&gt;
 
 </content>
  </entry>

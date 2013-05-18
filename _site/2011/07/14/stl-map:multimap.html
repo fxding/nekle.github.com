@@ -3,7 +3,7 @@
 <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Output Iterator</title>
+    <title>STL Map/MultiMap</title>
     <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
      
     <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
@@ -67,79 +67,73 @@
       <div class='postWrapper'>
 		<div class='postContainer'>
 			<div>
-  	<div class="postInfo"> <a href="/2011/03/28/%28STL%29Output-Iterator.html">28 Mar 2011</a></div>
+  	<div class="postInfo"> <a href="/2011/07/14/stl-map%3Amultimap.html">14 Jul 2011</a></div>
    	<div class="post">
-    <h1><a href=''>Output Iterator</a></h1>
+    <h1><a href=''>STL Map/MultiMap</a></h1>
     <script type="text/javascript" src="/js/syntax-js/shBrushCpp.js"></script>
 
 
-<p>2011年3月28日
-15:22</p>
+<p>2011年7月14日
+9:38</p>
 
-<h2>应用：copy</h2>
+<h3>一、空间结构</h3>
 
-<pre class="brush: cpp">
-template < class InputIterator, class OutputIterator>
-OutputIterator copy(InputIerator first, InputIerator last, OutputIterator result)
-{
-    for (; first != last; ++result, ++first)
-        *result = *first;
-    return result;
-}
-</pre>
-
-
-<h2>Concept：</h2>
+<blockquote><p>map和multimap将key-value pair当做元素，进行管理。它们可根据key的排序准则将元素排序。multimap允许元素重复，map不允许。</p></blockquote>
 
 <ul>
-<li>①复制（参数传入）和赋值（<code>*result=*first</code>）；</li>
-<li>②可累加（<code>++result</code>），表达式<code>++p</code>与<code>p++</code>有意义；</li>
-<li>③single-pass（单回），只写性（可以<code>*p=x</code>，但不能<code>x=*p</code>）；</li>
-<li>④不提供比较（!=、==、&lt;、>）</li>
-<li>⑤</li>
+<li>它们内部都采用rb_tree实现</li>
 </ul>
 
 
-<h2>例：ostream_itertor</h2>
+<blockquote><p><img src="http://farm9.staticflickr.com/8139/8749903444_ca65feb22d.jpg" alt="img" /></p></blockquote>
 
-<pre class="brush:cpp">
-// 这是一个output iterator，能够将对象格式化输出到某个 basic_ostream 上。
-// 注意，此版本为旧有之 HP 规格，未符合标准接口：
-// ostream_iterator< T, char T, traits>
-// 然而一般使用output iterators 时都只使用第一个template 参数，此时以下仍适用。
-// 注：SGI STL 3.3已实作出符合标准接口的 ostream_iterator。作法与本版大同小异。
-// 本版可读性较高。
-template < class T>
-class ostream_iterator {
-protected:
-  ostream* stream;
-  const char* string;        // 每次输出后的间隔符号。
+<h3>二、空间管理</h3>
+
+<blockquote><p>参见rb_tree</p></blockquote>
+
+<h3>三、map与multimap比较</h3>
+
+<p>   参见set与multiset比较，不同在于map与multimap如果value_type 不是const的则可修改value值。</p>
+
+<h3>四、相关型别</h3>
+
+<pre class="brush: cpp">
 public:
-  typedef output_iterator_tag     iterator_category;
-  typedef void                    value_type;
-  typedef void                    difference_type;
-  typedef void                    pointer;
-  typedef void                    reference;
  
-  // 下面这些ctors 使 istream_iterator 和某个 istream object 系结起来。
-  ostream_iterator(ostream& s) : stream(&s), string(0) {}
-  ostream_iterator(ostream& s, const char* c) : stream(&s), string(c)  {}
-  // 以上 ctors 的用法：
-  //  ostream_iterator< int> outiter(cout, ' ');  输出至 cout，每次间隔一个空格
+  // typedefs:
  
-  // 对迭代器做赋值（assign）动作，就代表要输出一笔数据
-  ostream_iterator< T>& operator=(const T& value) {
-    *stream << value;                // 先输出数值
-    if (string) *stream << string;    // 如果状态无误，再输出间隔符号
-    return *this;
-  }
-  ostream_iterator< T>& operator*() { return *this; }
-  ostream_iterator< T>& operator++() { return *this; }
-  ostream_iterator< T>& operator++(int) { return *this; }
-};
+  typedef Key key_type;           // 键值型别
+  typedef T data_type;            // 资料（真值）型别
+  typedef T mapped_type;          // (未被使用)
+  typedef pair< const Key, T> value_type;    // 元素型别（键值/真值）
+  typedef Compare key_compare;    // 键值比较函式
  
- </pre>
+private:
+  // 以下定义表述型别（representation type）。以map元素型别（一个pair）
+  // 的第一型别，做为RB-tree节点的键值型别。
+  typedef rb_tree< key_type, value_type,
+                  select1st< value_type>, key_compare, Alloc> rep_type;
+  rep_type t;  // 以红黑树（RB-tree）表现 map
+public:
+  typedef typename rep_type::pointer pointer;
+  typedef typename rep_type::const_pointer const_pointer;
+  typedef typename rep_type::reference reference;
+  typedef typename rep_type::const_reference const_reference;
+  typedef typename rep_type::iterator iterator;
+  // 注意上一行，为什么不像set一样地将iterator 定义为 RB-tree 的 const_iterator？
+  // 按说map 的元素有一定次序安排，不允许使用者在任意处做写入动作，因此
+  // 迭代器应该无法执行写入动作才是。
+  typedef typename rep_type::const_iterator const_iterator;
+  typedef typename rep_type::reverse_iterator reverse_iterator;
+  typedef typename rep_type::const_reverse_iterator const_reverse_iterator;
+  typedef typename rep_type::size_type size_type;
+  typedef typename rep_type::difference_type difference_type;
 
+
+</pre>
+
+
+<p></p>
  	
     </div>	
        <div class='insideInfo'>
@@ -148,25 +142,29 @@ public:
 				
 			 	<a href="#">#STL</a>
 			 	
+			 	<a href="#">#Map/MultiMap</a>
+			 	
+			 	<a href="#">#内部结构</a>
+			 	
 		</div>
 	</div>
 	<div class="navigation" style="float:left">
 	    
-	      <a class="next" href="/2011/07/11/stl-deque.html" rel="bookmark">&#171; Newer</a>
+	      <a class="next" href="/2012/09/15/jsregex.html" rel="bookmark">&#171; Newer</a>
 	    
 	    
 			|
 		
 	    
-	    	<a class="prev" href="/2011/03/27/%28STL%29Input-Iterator.html" rel="bookmark">Older &#187;</a>
+	    	<a class="prev" href="/2011/07/13/stl-set%3Amultiset.html" rel="bookmark">Older &#187;</a>
 	    
   	</div>
 	
 	
 <br class='clear' />
 <script type="text/javascript" charset="utf-8">
-  var disqus_url = "http://nekle.github.com/2011/03/28/%28STL%29Output-Iterator.html";
-  var disqus_title= "Output Iterator";
+  var disqus_url = "http://nekle.github.com/2011/07/14/stl-map%3Amultimap.html";
+  var disqus_title= "STL Map/MultiMap";
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">

@@ -3,7 +3,7 @@
 <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Arvhives</title>
+    <title>Output Iterator</title>
     <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
      
     <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
@@ -66,104 +66,107 @@
       <div id='posts' >
       <div class='postWrapper'>
 		<div class='postContainer'>
-			<div class='archives'>
+			<div>
+  	<div class="postInfo"> <a href="/2011/03/28/%28STL%29Output-Iterator.html">28 Mar 2011</a></div>
+   	<div class="post">
+    <h1><a href=''>Output Iterator</a></h1>
+    <script type="text/javascript" src="/js/syntax-js/shBrushCpp.js"></script>
 
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2013/05/10/markdown.html'>test mou</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2013/05/10/markdown.html'>10 May 2013</a>
+
+<p>2011年3月28日
+15:22</p>
+
+<h2>应用：copy</h2>
+
+<pre class="brush: cpp">
+template < class InputIterator, class OutputIterator>
+OutputIterator copy(InputIerator first, InputIerator last, OutputIterator result)
+{
+    for (; first != last; ++result, ++first)
+        *result = *first;
+    return result;
+}
+</pre>
+
+
+<h2>Concept：</h2>
+
+<ul>
+<li>①复制（参数传入）和赋值（<code>*result=*first</code>）；</li>
+<li>②可累加（<code>++result</code>），表达式<code>++p</code>与<code>p++</code>有意义；</li>
+<li>③single-pass（单回），只写性（可以<code>*p=x</code>，但不能<code>x=*p</code>）；</li>
+<li>④不提供比较（!=、==、&lt;、>）</li>
+<li>⑤</li>
+</ul>
+
+
+<h2>例：ostream_itertor</h2>
+
+<pre class="brush:cpp">
+// 这是一个output iterator，能够将对象格式化输出到某个 basic_ostream 上。
+// 注意，此版本为旧有之 HP 规格，未符合标准接口：
+// ostream_iterator< T, char T, traits>
+// 然而一般使用output iterators 时都只使用第一个template 参数，此时以下仍适用。
+// 注：SGI STL 3.3已实作出符合标准接口的 ostream_iterator。作法与本版大同小异。
+// 本版可读性较高。
+template < class T>
+class ostream_iterator {
+protected:
+  ostream* stream;
+  const char* string;        // 每次输出后的间隔符号。
+public:
+  typedef output_iterator_tag     iterator_category;
+  typedef void                    value_type;
+  typedef void                    difference_type;
+  typedef void                    pointer;
+  typedef void                    reference;
+ 
+  // 下面这些ctors 使 istream_iterator 和某个 istream object 系结起来。
+  ostream_iterator(ostream& s) : stream(&s), string(0) {}
+  ostream_iterator(ostream& s, const char* c) : stream(&s), string(c)  {}
+  // 以上 ctors 的用法：
+  //  ostream_iterator< int> outiter(cout, ' ');  输出至 cout，每次间隔一个空格
+ 
+  // 对迭代器做赋值（assign）动作，就代表要输出一笔数据
+  ostream_iterator< T>& operator=(const T& value) {
+    *stream << value;                // 先输出数值
+    if (string) *stream << string;    // 如果状态无误，再输出间隔符号
+    return *this;
+  }
+  ostream_iterator< T>& operator*() { return *this; }
+  ostream_iterator< T>& operator++() { return *this; }
+  ostream_iterator< T>& operator++(int) { return *this; }
+};
+ 
+ </pre>
+
+ 	
+    </div>	
+       <div class='insideInfo'>
+		<div class='postTags'>
+				Tags:
+				
+			 	<a href="#">#STL</a>
+			 	
 		</div>
 	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/12/30/back-2012-and-plan-2013.html'>2012 总结与计划</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/12/30/back-2012-and-plan-2013.html'>30 Dec 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/mdsyntax.html'>[转]Markdown 语法</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/mdsyntax.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/jsregex.html'>JavaScript正则表达式</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/jsregex.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/another-hello.html'>Another hello</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/another-hello.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/09/24/jekyll-more.html'>Jekyll 的一些函数和技巧</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/09/24/jekyll-more.html'>24 Sep 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/03/28/%28STL%29Output-Iterator.html'>Output Iterator</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/03/28/%28STL%29Output-Iterator.html'>28 Mar 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/03/27/%28STL%29Input-Iterator.html'>Input Iterator</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/03/27/%28STL%29Input-Iterator.html'>27 Mar 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/01/30/%28STL%29Value-Type.html'>(STL)Value Type(值类型)</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/01/30/%28STL%29Value-Type.html'>30 Jan 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/01/29/modeling-concept-refinement_and_inheritance.html'>Modeling Concept Refinement_and_inheritance</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/01/29/modeling-concept-refinement_and_inheritance.html'>29 Jan 2011</a>
-		</div>
-	</div>
-
-</div>
+	<div class="navigation" style="float:left">
+	    
+	      <a class="next" href="/2011/09/24/jekyll-more.html" rel="bookmark">&#171; Newer</a>
+	    
+	    
+			|
+		
+	    
+	    	<a class="prev" href="/2011/03/27/%28STL%29Input-Iterator.html" rel="bookmark">Older &#187;</a>
+	    
+  	</div>
+	
 	
 <br class='clear' />
 <script type="text/javascript" charset="utf-8">
-  var disqus_url = "http://nekle.github.com/archives.html";
-  var disqus_title= "Arvhives";
+  var disqus_url = "http://nekle.github.com/2011/03/28/%28STL%29Output-Iterator.html";
+  var disqus_title= "Output Iterator";
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
@@ -180,7 +183,6 @@
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
-
 		</div>
       </div>
          <div class='footer'>

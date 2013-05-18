@@ -3,7 +3,7 @@
 <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Arvhives</title>
+    <title>(STL)Value Type(值类型)</title>
     <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
      
     <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
@@ -66,104 +66,140 @@
       <div id='posts' >
       <div class='postWrapper'>
 		<div class='postContainer'>
-			<div class='archives'>
+			<div>
+  	<div class="postInfo"> <a href="/2011/01/30/%28STL%29Value-Type.html">30 Jan 2011</a></div>
+   	<div class="post">
+    <h1><a href=''>(STL)Value Type(值类型)</a></h1>
+    <script type="text/javascript" src="/js/syntax-js/shBrushCpp.js"></script>
 
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2013/05/10/markdown.html'>test mou</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2013/05/10/markdown.html'>10 May 2013</a>
+
+<p>每个<code>iterator</code>都会指向某物，此物便是<code>iterator</code>的<code>value type</code>。</p>
+
+<p>一个<code>iterator i</code>所指物的值，可以通过<code>*i</code>得到，<code>typeof（*i）</code>便是<code>iterator</code>的值类型。</p>
+
+<h3><code>iterator</code> 的值类型获取：</h3>
+
+<h4>通过函数嵌套方法间接获得：</h4>
+
+<pre class="brush: cpp">
+    template <\class I, class T>
+    void f_impl(I iter, T t)
+    {
+        T tmp; // T 是 I 的 value type
+        ...
+    }
+    
+    tempalte <\class T> inline void f(I iter)
+    {
+        f_impl(iter, *iter);
+    }
+</pre>
+
+
+<p>T便被实例化为iterator的值类型，可通过<code>T tmp</code>；声明iterator的值类型的临时变量。却不可以声明iterator值类型的返回类型。</p>
+
+<h4>通过给iterator类增加一个型别类型成员变量：</h4>
+
+<pre class="brush: cpp">
+template <\class Node>
+struct node_wrap
+{
+    typedef Node value_type;
+    Node *ptr;
+    ...
+}
+</pre>
+
+
+<p>iterator的value type可以通过<code>typename I::valu_type</code>获得，但此法只适用于<code>iterator class</code>，而对于non-class iterator却无能为力，而且由于iterator是作为指针的特化，由于指针是non-class iterator，这样做会破坏iterator的一致性。</p>
+
+<h4>定义专有<code>template class</code>获得iterator的值类型:</h4>
+
+<pre class="brush: cpp">
+template <\class Iterator>
+struct iterator_traits 
+{
+    typedef typename Iterator::value_type value_type;
+}
+</pre>
+
+
+<p>这样我们就可以使用下面的方式获得 iterator I 的 value type:</p>
+
+<p><code>typename iterator_traits&lt;I&gt;::value_type</code></p>
+
+<ul>
+<li></li>
+</ul>
+
+
+<pre class="brush: cpp">
+template<\class T>
+struct iterator_traits<\T*>{
+    typedef T value_type;
+}
+</pre>
+
+
+<ul>
+<li></li>
+</ul>
+
+
+<pre class="brush: cpp">
+template<\class T>
+struct iterator_traits<\const T*>{
+    typedef T value_type;
+}
+</pre>
+
+
+<ul>
+<li>应用</li>
+</ul>
+
+
+<pre class="brush: cpp">
+template<\class InputIerator>
+typename iterator_traits<\InputIterator>::value_type
+sum_nonempty(InputIerator first, InputIerator last){
+    typename iterator_traits<\InputIerator>::value_type result = 
+        *first++;
+    for (; first!=last; ++first) 
+        result += *first;
+    return result;
+ }
+ </pre>
+
+
+
+ 	
+    </div>	
+       <div class='insideInfo'>
+		<div class='postTags'>
+				Tags:
+				
+			 	<a href="#">#STL</a>
+			 	
 		</div>
 	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/12/30/back-2012-and-plan-2013.html'>2012 总结与计划</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/12/30/back-2012-and-plan-2013.html'>30 Dec 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/mdsyntax.html'>[转]Markdown 语法</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/mdsyntax.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/jsregex.html'>JavaScript正则表达式</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/jsregex.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/another-hello.html'>Another hello</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/another-hello.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/09/24/jekyll-more.html'>Jekyll 的一些函数和技巧</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/09/24/jekyll-more.html'>24 Sep 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/03/28/%28STL%29Output-Iterator.html'>Output Iterator</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/03/28/%28STL%29Output-Iterator.html'>28 Mar 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/03/27/%28STL%29Input-Iterator.html'>Input Iterator</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/03/27/%28STL%29Input-Iterator.html'>27 Mar 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/01/30/%28STL%29Value-Type.html'>(STL)Value Type(值类型)</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/01/30/%28STL%29Value-Type.html'>30 Jan 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/01/29/modeling-concept-refinement_and_inheritance.html'>Modeling Concept Refinement_and_inheritance</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/01/29/modeling-concept-refinement_and_inheritance.html'>29 Jan 2011</a>
-		</div>
-	</div>
-
-</div>
+	<div class="navigation" style="float:left">
+	    
+	      <a class="next" href="/2011/03/27/%28STL%29Input-Iterator.html" rel="bookmark">&#171; Newer</a>
+	    
+	    
+			|
+		
+	    
+	    	<a class="prev" href="/2011/01/29/modeling-concept-refinement_and_inheritance.html" rel="bookmark">Older &#187;</a>
+	    
+  	</div>
+	
 	
 <br class='clear' />
 <script type="text/javascript" charset="utf-8">
-  var disqus_url = "http://nekle.github.com/archives.html";
-  var disqus_title= "Arvhives";
+  var disqus_url = "http://nekle.github.com/2011/01/30/%28STL%29Value-Type.html";
+  var disqus_title= "(STL)Value Type(值类型)";
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
@@ -180,7 +216,6 @@
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
-
 		</div>
       </div>
          <div class='footer'>

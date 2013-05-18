@@ -3,7 +3,7 @@
 <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Arvhives</title>
+    <title>Modeling Concept Refinement_and_inheritance</title>
     <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
      
     <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
@@ -66,104 +66,63 @@
       <div id='posts' >
       <div class='postWrapper'>
 		<div class='postContainer'>
-			<div class='archives'>
+			<div>
+  	<div class="postInfo"> <a href="/2011/01/29/modeling-concept-refinement_and_inheritance.html">29 Jan 2011</a></div>
+   	<div class="post">
+    <h1><a href=''>Modeling Concept Refinement_and_inheritance</a></h1>
+    <h3>Concept：</h3>
 
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2013/05/10/markdown.html'>test mou</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2013/05/10/markdown.html'>10 May 2013</a>
+<ul>
+<li>concept是一组型别条件（type requirement）。</li>
+<li>concept是型别的集合。</li>
+<li>concept是一组合法程序。</li>
+</ul>
+
+
+<h3>Modeling：（一个型别和一组型别之间的关系）</h3>
+
+<pre><code>如果型别T满足某个concept C的所有条件，则型别T就是Concept C的一个model, model是型别
+与concept间的关系.
+</code></pre>
+
+<h3>Refinement：（一组型别和另一组型别之间的关系）</h3>
+
+<pre><code>如果concept C2提供concept C1的所有功能，再加上其他可能的额外功能，则说C2是C1的refinement.
+</code></pre>
+
+<ul>
+<li>自反性（自身）</li>
+<li>涵盖性（满足C2的model必满足C1）</li>
+<li>传递性（concept间）refinement是concept间的关系。</li>
+</ul>
+
+
+<h3>inheritance：（两个型别之间的关系）</h3>
+
+<p><a href="http://www.flickr.com/photos/95621335@N02/8737635679/" title="d3bcbb57806c75ff295731c5633d23fe by top us, on Flickr"><img src="http://farm8.staticflickr.com/7286/8737635679_7cf00554d4.jpg" width="351" height="308" alt="d3bcbb57806c75ff295731c5633d23fe"></a></p>
+ 	
+    </div>	
+       <div class='insideInfo'>
+		<div class='postTags'>
+				Tags:
+				
+			 	<a href="#">#STL</a>
+			 	
 		</div>
 	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/12/30/back-2012-and-plan-2013.html'>2012 总结与计划</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/12/30/back-2012-and-plan-2013.html'>30 Dec 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/mdsyntax.html'>[转]Markdown 语法</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/mdsyntax.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/jsregex.html'>JavaScript正则表达式</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/jsregex.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2012/09/15/another-hello.html'>Another hello</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2012/09/15/another-hello.html'>15 Sep 2012</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/09/24/jekyll-more.html'>Jekyll 的一些函数和技巧</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/09/24/jekyll-more.html'>24 Sep 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/03/28/%28STL%29Output-Iterator.html'>Output Iterator</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/03/28/%28STL%29Output-Iterator.html'>28 Mar 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/03/27/%28STL%29Input-Iterator.html'>Input Iterator</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/03/27/%28STL%29Input-Iterator.html'>27 Mar 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/01/30/%28STL%29Value-Type.html'>(STL)Value Type(值类型)</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/01/30/%28STL%29Value-Type.html'>30 Jan 2011</a>
-		</div>
-	</div>
-
- 	 <div class='archive-item'>
-    	<div class='archive-item-title'>
-			<a href='/2011/01/29/modeling-concept-refinement_and_inheritance.html'>Modeling Concept Refinement_and_inheritance</a>
-		</div>
-		<div class='archive-item-date'>
-			<a href='/2011/01/29/modeling-concept-refinement_and_inheritance.html'>29 Jan 2011</a>
-		</div>
-	</div>
-
-</div>
+	<div class="navigation" style="float:left">
+	    
+	      <a class="next" href="/2011/01/30/%28STL%29Value-Type.html" rel="bookmark">&#171; Newer</a>
+	    
+	    
+	    
+  	</div>
+	
 	
 <br class='clear' />
 <script type="text/javascript" charset="utf-8">
-  var disqus_url = "http://nekle.github.com/archives.html";
-  var disqus_title= "Arvhives";
+  var disqus_url = "http://nekle.github.com/2011/01/29/modeling-concept-refinement_and_inheritance.html";
+  var disqus_title= "Modeling Concept Refinement_and_inheritance";
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
@@ -180,7 +139,6 @@
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
-
 		</div>
       </div>
          <div class='footer'>

@@ -4,105 +4,13 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2013-05-18T11:01:31+08:00</updated>
+ <updated>2013-05-18T11:03:26+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
    <email>nekleding@gmail.com</email>
  </author>
  
- 
- <entry>
-   <title>test mou</title>
-   <link href="http://nekle.github.com/2013/05/10/markdown.html"/>
-   <updated>2013-05-10T00:00:00+08:00</updated>
-   <id>http://nekle.github.com/2013/05/10/markdown</id>
-   <content type="html">&lt;!--
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCpp.js&quot;&gt;&lt;/script&gt;
---&gt;
-
-
-
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;good&lt;/li&gt;
-&lt;li&gt;note&lt;/li&gt;
-&lt;li&gt;many&lt;/li&gt;
-&lt;li&gt;maney&lt;/li&gt;
-&lt;li&gt;too&lt;/li&gt;
-&lt;li&gt;yes&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;----　&lt;/p&gt;
-
-&lt;h3&gt;helo&lt;/h3&gt;
-
-&lt;h4&gt;你好吗&lt;/h4&gt;
-
-&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;
-&lt;code&gt;
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-int main()
-{
-    printf(&quot;hello world!\n&quot;);
-    return 0;
-}
-&lt;/pre&gt;
-&lt;/code&gt;
-&lt;/p&gt;
-
-
-&lt;p&gt;&lt;em&gt;马努&lt;/em&gt;
-2013年5月10日
-&lt;strong&gt;strong&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;这是什么意思啊?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;
-code is beautiful!
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;zheshishen&lt;/p&gt;
-
-&lt;h1&gt;table&lt;/h1&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;title1 &lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;title2&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;title3&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;你        &lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;我        &lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;           他 |&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
-&lt;p&gt;**&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;del&gt;试试&lt;/del&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://baidu.com&quot;&gt;百度&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/95621335@N02/8725348847/&quot; title=&quot;back-2012-plan-2013 by top us, on Flickr&quot;&gt;&lt;img src=&quot;http://farm8.staticflickr.com/7356/8725348847_a6c71451e4.jpg&quot; width=&quot;500&quot; height=&quot;187&quot; alt=&quot;back-2012-plan-2013&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content>
- </entry>
  
  <entry>
    <title>2012 总结与计划</title>

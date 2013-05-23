@@ -4,13 +4,58 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2013-05-19T11:28:49+08:00</updated>
+ <updated>2013-05-24T00:11:56+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
    <email>nekleding@gmail.com</email>
  </author>
  
+ 
+ <entry>
+   <title>xcode NIB</title>
+   <link href="http://nekle.github.com/2013/05/19/xib-%E6%96%87%E4%BB%B6%E4%B8%8E%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6%E5%85%B3%E7%B3%BB.html"/>
+   <updated>2013-05-19T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2013/05/19/xib-文件与代码文件关系</id>
+   <content type="html">&lt;p&gt;翻译自: &lt;a href=&quot;http://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/LoadingResources/CocoaNibs/CocoaNibs.html%23//apple_ref/doc/uid/10000051i-CH4-SW8&quot;&gt;Nib Files&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Nib 文件&lt;/h3&gt;
+
+&lt;p&gt;nib 文件在创建OS X和iOS 应用中扮演着一个重要角色. 使用Nib文件, 你可以在xcode里通过图形化的方式创建和修改你的用户界面. 修改后可以马上看到效果, 比如说你可以很快的尝试不同的布局方式和配置. 此后你甚至不需要修改代码就可以对你的界面作出修改.
+对于使用Appkit或者UIkit框架构建的应用程序, nib 文件具有特殊的意义. 这两个框架都支持将nib文件用于layout, windows, views, control, 并将这些对象与应用的事件处理代码相关联. Xcode 结合这些框架来帮助你将界面上的control与工程中对这些control做出响应的对象相连接. 这种方式减少了设置的数量, 也使得改变界面与代码的关系变得很简单.&lt;/p&gt;
+
+&lt;h3&gt;解剖 nib 文件&lt;/h3&gt;
+
+&lt;p&gt;nib 文件除了可以描述应用界面相关的元素, 包括windows, views, controls 等等. nib 文件还可以描述一些看不见的元素, 比如说管理windows 和 views 的对象(viewController, Delegate…). 在运行时, 这些描述被用于重建所描述的对象, 并且配置到你的应用中, 当你在运行时加载一个nib文件时, 你会获得一个描述对象的拷贝, nib加载代码会实例化这些对象, 并初始化. 然后将这些对象和你代码中的对象建立连接.&lt;/p&gt;
+
+&lt;h3&gt;接口对象(interface object)&lt;/h3&gt;
+
+&lt;p&gt;接口对象是你添加到nib文件中实现用户界面的东西. 当nib文件在运行时加载时, 这些接口对象实际上是被nib加载代码实例化的. 新建的nib文件至少有一个接口对象, 一般是一个window 或一个menu, 以后你可以在其中添加更多的接口对象在nib文件中以实现你的用户界面.
+除了代表可见的对象, 比如windows, views, controls, 和 menus. 接口对象还可以代表不可见的对象, 几乎在所有情况下, 你添加到nib文件中的不可见的对象都是一些用来管理可视对象的控制对象. 尽管你也可以使用代码创建这些对象, 但是通过nib文件创建和配置这些对象更加方便. xcode 提供了一个通用的对象, 你可以在添加controllers 和其他一些不可见对象时使用. xcode 也提供了controllers 对象用于管理Cocoa的绑定.&lt;/p&gt;
+
+&lt;h3&gt;File's Owner&lt;/h3&gt;
+
+&lt;p&gt;File's owner 是nib中最重要的对象之一. 不像接口对象, File's owner对象是一个占位(palceholder)对象, 当nib文件加载时不会被创建. 起而代之, 你需要创建这个对象并将其传递给nib加载代码. &lt;strong&gt;这个对象重要的原因是它是应用代码和nib文件之间的主链接&lt;/strong&gt;. 更明确一点, 它是nib文件中内容的controller 对象.&lt;/p&gt;
+
+&lt;h3&gt;First Responder&lt;/h3&gt;
+
+&lt;p&gt;在nib文件按中, First Responder 是一个占位(placeholder)对象, 代表了应用动态决策的responder链中的第一个对象. 由于一个应用的responder chain 不能在设计时决定, 所以First Responder 占位对象作为target的替身, 代表了任何想传递给应用responder chain的活动消息的target. menu items 通常将First Responder 作为target. 例如, 在窗口上的最小化menu item会影藏应用最前面的窗口, 而不是某一个特殊的窗口. 再比如, Copy menu item 应该拷贝当前选中的东西. 其他在你应用中的对象也可以将 First Responder 最为target.
+当你将一个nib文件加载到内存时, 你不需要最任何事去管理或者替换 First Responder 占位对象, AppKit 和UIKit 框架会自动根据当前应用程序的配置去设置和维持First Responder.&lt;/p&gt;
+
+&lt;h3&gt;Top-Level Objects&lt;/h3&gt;
+
+&lt;p&gt;当应用程序加载nib文件的时候, Cocoa 创建整个工程中全部对象的&lt;strong&gt;objects graph&lt;/strong&gt;, 这个objects graph 包括了所有的windows, views, controls, cells, menus, 和在nib中自定义的对象. Top-level objects 是那些没有父对象的对象. top-level objects 一般只包括windows menubars, 和你添加到nib中的自定义controllers 对象, (File's Owner, First responder, 和 Application 是占位对象, 不认为是 top-level objects)&lt;/p&gt;
+
+&lt;p&gt;一般, 你使用&lt;code&gt;outlets&lt;/code&gt;在 File's owner 对象中去保存对nib文件中的top-level objects的引用. 如果你不使用&lt;code&gt;outlets&lt;/code&gt;, 你可以直接从nib 加载函数获得top-level objects. 由于当这些对象使用完时, 你的应用需要负责释放他们, 所以你应该一直保持指向这些对象额指针.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/CocoaNibs/CocoaNibs.html#//apple_ref/doc/uid/10000051i-CH4-SW6&quot;&gt;Managing the Lifetimes of Objects from Nib Files&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;Image and Sound Resources&lt;/h3&gt;
+
+&lt;p&gt;在xcode中, 你可以引用一个外部的image 和sound resources 从你的 nib 文件中. 一些controls 和 views 在默认配置情况下, 能够显示 images 或者播放 sound resources. Xcode 库提供访问工程中images 和sound resources的接口, 这使得你可以链接到nib中的这些资源文件. nib 文件不会直接存储这些资源, 它存储这些资源的names以便nib加载代码能够找到.
+当你加载一个包含images 或者 sound resources引用的nib文件时, nib 加载代码读取真实的image 或声音 文件到内存, 并且cache 他们. 在OS X 中, image 和 sound resources存储在命名caches中以便你可以在需要的时候访问. 在 iOS 中, 只有imags 被存储在命名caches 中. 要访问images, 你可以使用&lt;code&gt;NSImage&lt;/code&gt;或&lt;code&gt;UIImage&lt;/code&gt; 的&lt;code&gt;imageNamed:&lt;/code&gt; 方法, 只依赖于你使用的平台. 在OS X中要访问sounds, 可以使用&lt;code&gt;NSSound&lt;/code&gt; 的&lt;code&gt;soundNamed:&lt;/code&gt;方法.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>2012 总结与计划</title>

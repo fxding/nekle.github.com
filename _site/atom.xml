@@ -4,13 +4,84 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2013-05-24T00:11:56+08:00</updated>
+ <updated>2013-05-26T16:30:33+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
    <email>nekleding@gmail.com</email>
  </author>
  
+ 
+ <entry>
+   <title>iOS 关键对象关系</title>
+   <link href="http://nekle.github.com/2013/05/26/%E5%85%B3%E9%94%AE%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB.html"/>
+   <updated>2013-05-26T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2013/05/26/关键对象关系</id>
+   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;h3&gt;关系图&lt;/h3&gt;
+
+&lt;p&gt;下图描述了一个ios应用中重要的几个对象之间的关系.&lt;/p&gt;
+
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+
++---------------+     +-----------------------+  +-----------+      +-----------+ +-------------------+
+| UIApplication |     | UIApplicationDelegate |  | UIWindow  |      | UIScreen  | | UIViewController  |
++---------------+     +-----------------------+  +-----------+      +-----------+ +-------------------+
+        |                        |                  |                     |            |
+        | delegate&lt; assign&gt;      |                  |                     |            |
+        |-----------------------&gt;|                  |                     |            |
+        |                        |                  |                     |            |
+        | keyWindow&lt; readonly&gt;   |                  |                     |            |
+        |------------------------------------------&gt;|                     |            |
+        |                        |                  |                     |            |
+        | windows&lt; readonly&gt;     |                  |                     |            |
+        |------------------------------------------&gt;|                     |            |
+        |                        |                  |                     |            |
+        |                        | window&lt; retain&gt;  |                     |            |
+        |                        |-----------------&gt;|                     |            |
+        |                        |                  |                     |            |
+        |                        |                  | screen&lt; retain&gt;     |            |
+        |                        |                  |--------------------&gt;|            |
+        |                        |                  |                     |            |
+        |                        |                  | rootViewController&lt; retain&gt;      |
+        |                        |                  |---------------------------------&gt;|
+        |                        |                  |                     |            |
+&lt;/pre&gt;
+
+
+&lt;h3&gt;UIApplication&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;delegate&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;一个遵从&lt;code&gt;UIApplicationDelegate&lt;/code&gt; 定义的 protocol 的对象, 当&lt;code&gt;UIApplication&lt;/code&gt; 发生状态变化时, 就会调用&lt;code&gt;delegate&lt;/code&gt; 的相应方法, 实现这些方法给了用户一个在&lt;code&gt;UIApplication&lt;/code&gt;状态变化时做出响应的机会, 比如: 应用将要关闭, 系统处于低内存, 应用完成启动.&lt;br/&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;windows&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;包含了应用可见的和不可见的&lt;code&gt;windows&lt;/code&gt;. 这些&lt;code&gt;windows&lt;/code&gt; 按照从后向前的顺序排序.&lt;br/&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;keyWindow&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;指向应用的key Window, 这个key window 为 &lt;code&gt;windows&lt;/code&gt; 中最后发送了&lt;code&gt;makeKeyAndVisible&lt;/code&gt; 消息的 window.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;UIApplicationDelegate&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;window&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;指向了应用在设备主屏上显示出来的内容window. 一般情况下, 当创建一个工程时, xcode 都会同时在app 的delegate 中创建一个&lt;code&gt;window&lt;/code&gt;属性. 当此属性为&lt;code&gt;nil&lt;/code&gt;时, 将会导致应用创建一个通用的&lt;code&gt;UIWindow&lt;/code&gt; 赋值给该属性. 如果想为应用提供一个自定义的window, 你需要实现给属性的&lt;code&gt;getter&lt;/code&gt; 方法, 通过&lt;code&gt;getter&lt;/code&gt; 去创建和返回你的自定义window.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;UIWindow&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;screen&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;指向了&lt;code&gt;window&lt;/code&gt;当前在其上显示的&lt;code&gt;screen&lt;/code&gt;. 默认情况下, 所有的&lt;code&gt;windows&lt;/code&gt;都由主设&lt;code&gt;screen&lt;/code&gt;幕创建, 当有另外的&lt;code&gt;screen&lt;/code&gt; 连接到设备上时, assigning 一个不同的screen给此属性将会导致&lt;code&gt;window&lt;/code&gt;显示在新的screen上.&lt;br/&gt;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;rootViewController&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;指向了window的root view controller, 这个controller提供了window的内容view.assigning 一个view controller 给这个属性, 将会使这个view controller的 view 成为这个window 的内容 view. 如果window已经指向一个view controller, 将会移除已存在的view controller, 在指向新的view controller.&lt;br/&gt;&lt;/p&gt;&lt;/blockquote&gt;
+</content>
+ </entry>
  
  <entry>
    <title>xcode NIB</title>

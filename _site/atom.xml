@@ -4,13 +4,256 @@
  <title>nekle</title>
  <link href="http://nekle.github.com/atom.xml" rel="self"/>
  <link href="http://nekle.github.com/"/>
- <updated>2013-05-26T16:30:33+08:00</updated>
+ <updated>2013-10-26T18:14:18+08:00</updated>
  <id>http://nekle.github.com/</id>
  <author>
    <name>nekle</name>
    <email>nekleding@gmail.com</email>
  </author>
  
+ 
+ <entry>
+   <title>iOS自动排布器--LayoutPanel</title>
+   <link href="http://nekle.github.com/2013/10/23/iOS%E8%87%AA%E5%8A%A8%E6%8E%92%E5%B8%83%E5%99%A8--LayoutPanel.html"/>
+   <updated>2013-10-23T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2013/10/23/iOS自动排布器--LayoutPanel</id>
+   <content type="html">&lt;h1&gt;LayoutPanel&lt;/h1&gt;
+
+&lt;p&gt;LayoutPanel 排布器包含三种排布方式, 分别为栈式(StackPanel),停靠式(DockPanel), 九宫格式(GridPanel), 这三种布局方式各有特色, 在应用中使用 LayoutPanel 进行元素排布时你有可能只需要使用一种排布方式, 也有可能需要同时使用两种或三种排布方式一起来完成一个复杂的界面元素排布. 完成同一种显示的排布你可以使用不同的排布方式完成. 比如完成一个列表的排布你可以使用 StackPanel, 或者单列的 GridPanel, 或者使用同一中 Dock 方式的 DockPanel. 比如下面的图展示了使用不同的LayoutPanel完成相同的列表排布.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm8.staticflickr.com/7332/10488276874_ed0774571d.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;下图栈式了使用三种不同的 LayoutPanel 共同完成的排布:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;竖屏&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm4.staticflickr.com/3814/10424358723_1a98e1f271.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;横屏&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm8.staticflickr.com/7452/10424214796_0f325478d6.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;StackPanel&lt;/h2&gt;
+
+&lt;p&gt;栈式排布方式就如算法中的栈一样, 元素将从左向右(从右向左), 从上到下(从下到上) 按照加入排布器的顺序依次进行排布.
+下面为可用的StackPanel 的排布方向.&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;typedef enum _StackPanelFlowDirector
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eStackPanelFlowDirector_LeftToRight,
+eStackPanelFlowDirector_RightToLeft,
+eStackPanelFlowDirector_TopToBottom,
+eStackPanelFlowDirector_BottomToTop,
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}StackPanelFlowDirector;&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;h3&gt;StackPanel 支持的布局方式&lt;/h3&gt;
+
+&lt;p&gt;```
+typedef enum _StackPanelArchorType{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eStackPanelArchorType_LeftTop       = 0x00,
+eStackPanelArchorType_LeftCenter    = 0x01,
+eStackPanelArchorType_LeftBottom    = 0x02,
+eStackPanelArchorType_CenterTop     = 0x03,
+eStackPanelArchorType_CenterCenter  = 0x04,
+eStackPanelArchorType_CenterBottom  = 0x05,
+eStackPanelArchorType_RightTop      = 0x06,
+eStackPanelArchorType_RightCenter   = 0x07,
+eStackPanelArchorType_RightBottom   = 0x08,    
+// Fill 属性
+eStackPanelArchorType_FillWidth     = 0x100, 
+eStackPanelArchorType_FillHeight    = 0x200,
+eStackPanelArchorType_FillWidthHeight  = 0x100 | 0x200,
+eStackPanelArchorType_Fill          = 0x8000,
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}StackPanelArchorType;&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;前面的几个类型为布局类型, 后面四个为填充类型, 布局类型确定了元素在排布Panel上的位置, 填充属性确定元素如何填充Panel. 布局属性可以和填充属性同时使用, 但每次布局属性和填充属性都只能使用一个.
+比如 &lt;code&gt;eStackPanelArchorType_LeftTop | eStackPanelArchorType_FillWidth&lt;/code&gt; , 指定了元素排布在Panel的左上方, 元素的宽度为Panel的宽度.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;eStackPanelArchorType_Fill&lt;/code&gt; 这个属性是一个特殊的填充类型, 当填充属性指定为这个类型时, 该元素将填充Panel剩余的所有空间. 比如上方&lt;code&gt;横屏&lt;/code&gt;和&lt;code&gt;竖屏&lt;/code&gt;的图中最下方棕色的元素就是指定了该填充类型.&lt;/p&gt;
+
+&lt;h2&gt;GridPanel&lt;/h2&gt;
+
+&lt;p&gt;GridPanel 即九宫格排布方式, 九宫格排布方式在应用的元素排布中也是非常常用的, 比如手机的桌面就是一种九宫格排布. 九宫格排布的一大特点就是能够确定元素的大体位置然后再做特殊的调整.&lt;/p&gt;
+
+&lt;h3&gt;GridPanel 支持的排布方式&lt;/h3&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;typedef enum _GridPanelArchorType
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eGridPanelArchorType_LeftTop        = 0x00,
+eGridPanelArchorType_LeftCenter     = 0x01,
+eGridPanelArchorType_LeftBottom     = 0x02,
+eGridPanelArchorType_CenterTop      = 0x03,
+eGridPanelArchorType_CenterCenter   = 0x04,
+eGridPanelArchorType_CenterBottom   = 0x05,
+eGridPanelArchorType_RightTop       = 0x06,
+eGridPanelArchorType_RightCenter    = 0x07,
+eGridPanelArchorType_RightBottom    = 0x08,
+// 填充
+eGridPanelArchorType_FillWidth      = 0x100,
+eGridPanelArchorType_FillHeight     = 0x200,
+eGridPanelArchorType_FillWidthHeight  = 0x100 | 0x200,
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;} GridPanelArchorType;&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;GridPanel 支持的排布方式和StackPanel支持的排布方式差不多一样, 但少了与Stackpanel 的&lt;code&gt;eStackPanelArchorType_Fill&lt;/code&gt; 相似的填充类型.&lt;/p&gt;
+
+&lt;h2&gt;DockPanel&lt;/h2&gt;
+
+&lt;p&gt;DockPanel 即停靠式排布方式, Dock 排布方式将 Panel 的四条边作为停靠点, 具有一种吸附的效果, 但也不是始终使用Panel的四条边作为Dock点, 应该说使用当前未被使用的Panel空间作为停靠. 这种排布方式也有很多应用方式, 比如说一个画图一个用的工具条.&lt;/p&gt;
+
+&lt;h3&gt;DockPanel 支持的排布方式&lt;/h3&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;typedef enum _DockSideType {&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eDockSideType_Left,
+eDockSideType_Right,
+eDockSideType_Top,
+eDockSideType_Bottom,
+eDockSideType_Fill,
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}DockSideType;&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;和 StackPanel 和 GridPanel 相比 DockPanel 只提供了四种停靠方式, 和一种填充方式,  &lt;code&gt;eDockSideType_Fill&lt;/code&gt; 填充方式同样是将Panel中剩余的空间完全填充.&lt;/p&gt;
+
+&lt;h3&gt;Demo&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm4.staticflickr.com/3769/10488943405_e87320f41e.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;github&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Nekle/StackPanel&quot;&gt;LayoutPanel&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>问题的间接解决</title>
+   <link href="http://nekle.github.com/2013/10/07/%E9%97%AE%E9%A2%98%E7%9A%84%E9%97%B4%E6%8E%A5%E8%A7%A3%E5%86%B3.html"/>
+   <updated>2013-10-07T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2013/10/07/问题的间接解决</id>
+   <content type="html">&lt;p&gt;我们的生活中无处不存在间接的解决问题的例子, 通过这篇文章的描述希望对你解决问题有所帮助. 下面通过几个例子具体的讨论一下, 间接的解决问题如何很好的满足需要, 又达到共赢的好处.&lt;/p&gt;
+
+&lt;h2&gt;快递&lt;/h2&gt;
+
+&lt;p&gt;你在淘宝上买了一双鞋, 这个事情中涉及到的角色本来只有你和商家. 你买鞋子, 商家卖鞋子, 当你在商家那买了一双鞋, 商家把鞋子给你.
+问题出现了, 商家如何把鞋子给你, 商家不可能坐车或者坐飞机将鞋子送给你. 你也不可能坐车或坐飞机到商家那去取. 这样成本太高了.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm3.staticflickr.com/2823/10155647475_f21b1e8050.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;怎么办? 快递出现了!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://farm8.staticflickr.com/7388/10155820163_ff4f798cf3.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在这个过程中为什么会出现快递, 为什么能容忍快递的存在? 当然是因为快递的出现降低了商家和消费者之间送货的成本, 达到了三方的共赢. 快递的出现促进了网购的发展.
+在这个过程中快递就是解决网购送货问题的一个间接角色, 这个间接的角色很好的解决了问题.&lt;/p&gt;
+
+&lt;p&gt;生活还有很多间接解决问题的案例, 比如邮箱, 解决了送信时, 送信员送信时主人不在, 需要等待的问题; 比如说招聘网站, 解决了求职者与招聘者不能信息互通的问题…&lt;/p&gt;
+
+&lt;h2&gt;订单&lt;/h2&gt;
+
+&lt;p&gt;问题的间接解决方法, 不只是存在于我们日常的生活中, 在写代码, 方案指定等等的时候同样可以使用一种间接的方式去解决一些问题.
+比如说一个淘宝的某个处理订单的后台系统A 拥有用户所有的订单数据, 此时淘宝构建另一个系统B来对这些订单做实时分析, 那B系统的数据从哪里来, 肯定是从A处获得. 此时A,B就产生了一个联系. 若以后淘宝后台有需要构建一个C系统对用户的订单做其他方面的业务. 则A有可能和C产生联系. A 就可能会存在很多与本身业务无关的逻辑, 最终可能导致 C 成为臃肿的模块, 成为单点, 限制业务的发展等等一系列问题.&lt;/p&gt;
+
+&lt;p&gt; &lt;img src=&quot;http://farm8.staticflickr.com/7302/10155805683_75ac86b341.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;怎么办? 我们为何不将A中转发订单的逻辑抽取出来作为一个单独的系统O. 使得A与BCD解耦, A只与O建立联系. 如此这般, 再有新的业务需要订单数据也只用在O中添加配置或者类似的东西就可以获得用户订单数据. O在这里更像是一个订阅系统. A是数据的提供者, BCD是数据的订阅者. 当然O作为中间的一个订阅系统, 不只可以提供订单数据的订阅, 所有有需要类似订阅的业务都可以在O中实现. 这样O就发展成为了一个订阅的专门系统(专一功能的系统总是能够做到极致).
+&lt;img src=&quot;http://farm3.staticflickr.com/2857/10155735026_e0dc9b12cc.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;监听&lt;/h2&gt;
+
+&lt;p&gt;这属于一个较大的间接解决问题的例子, 有没有更小的例子, 当然有!&lt;/p&gt;
+
+&lt;p&gt;比如在一个应用的开发中一个用户的数据的更新, 可能代码中很多地方都会更新用户的数据, 也会有很多地方会显示用户的数据. 如何将用户信息的修改实时的显示到各个地方? 最直接的方法就是在所有会更新用户数据的地方添加监听, 当用户数据修改时调用回调修改各处的显示, 这样做不只增加了写代码时重复劳动的量, 也可能忘记在某个地方添加监听, 查问题也比较难. 如何间接的解决这个问题? 我们可以为用户数据的更新添加一个监听点, 就叫”用户数据更新监听点”, 将所有显示用户数据的地方在这个监听点上添加监听, 在更新可以更新用户信息的地方只需要调用一下这个”用户数据更新监听点”, 这个监听点就可以调用到所有的在此添加了监听的对象. 这样做简单的解决了更新点与现实点多对多的复杂问题. 添加监听点不只有这点好处, 监听点还解决了更新点与显示点创建不同步的问题, 比如说没有监听点时, 必须创建了更新点你才能添加监听, 有了监听点之后, 你可以在任何时候创建更新点.&lt;/p&gt;
+
+&lt;p&gt;在写代码中一个最小的间接解决问题的例子可能是交换AB两个数据的值的问题. 间接变量的引入很好的达到了目的.&lt;/p&gt;
+
+&lt;h2&gt;间接的解决问题&lt;/h2&gt;
+
+&lt;p&gt;当你遇到问题需要解决时, 不妨寻找一种间接的方法, 想一想AB之间的问题是否可以转换为ACB之间的问题.&lt;/p&gt;
+
+&lt;h2&gt;TIPS&lt;/h2&gt;
+
+&lt;p&gt;现在很多应用都是间接解决问题的例子, 比如说: 打车应用, 微博应用, 教育类应用, 订餐应用等等,&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>就近接入是个什么东西</title>
+   <link href="http://nekle.github.com/2013/09/30/%E5%B0%B1%E8%BF%91%E6%8E%A5%E5%85%A5%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF.html"/>
+   <updated>2013-09-30T00:00:00+08:00</updated>
+   <id>http://nekle.github.com/2013/09/30/就近接入是个什么东西</id>
+   <content type="html">&lt;h2&gt;一个比喻&lt;/h2&gt;
+
+&lt;p&gt;我住的旁边有一个沃尔玛, 每个星期我都会去一两次沃尔玛买一些日常的用品, 沃尔玛齐全的商品是小超市无法比的, 需要买的东西几乎都会有. 沃尔玛在深圳有12个店, 这些店分布在深圳的各处. 沃尔玛为什么要在深圳开设12家店, 是不是开设一家就足够了呢? 答案显而易见, 开一家店只能招揽附近的消费者, 其他地方的消费者会由于距离太远而选择其他的超市. 将店开设在距离消费者较近的地方, 消费者可以根据自己的情况选择距离自己较近的店进行购物, 这样可以最大限度的招揽到消费者.&lt;/p&gt;
+
+&lt;p&gt;沃尔玛付出了什么代价: 增加了更多的成本, 包括人力,物力,财力等
+沃尔玛获得了什么好处: 获得了更多的消费者, 更多的消费者认知度, 更多的销售.&lt;/p&gt;
+
+&lt;p&gt;一个互联网服务和沃尔玛超市一样, 当你只将超市开设在某一个地方时, 相较于距离较远的消费者, 距离超市近的消费者就会常常去. 互联网服务也一样, 访问较快的用户会感觉很好,很有可能会继续使用甚至会推荐给朋友, 访问较慢的用户就会感到厌烦, 很大可能会放弃使用甚至会建议朋友不要用. 所以为提高用户访问互联网服务的速度, 在不同地区部署相同的互联网服务在现在是一种通用的做法.
+你在不同的地区部署了相同的互联网服务, 如何让用户知道这些服务, 并根据用户自身情况访问质量最好位置的服务, 就是就近接入所要解决的问题.
+在生活中就近接入像114查询服务,你可以询问获得附近的旅店,餐馆…. 在互联网中就近接入更像dns服务器, 不过就近接入更加特化, 有更多的业务属性.
+在互联网中就近接入为什么重要, 如果你了解DNSPod 的发展历史和现在的业务, 我想你会明白. 如果你不了解可以谷歌一下.&lt;/p&gt;
+
+&lt;h2&gt;就近接入是什么&lt;/h2&gt;
+
+&lt;p&gt;我想通过上面的比喻说明我想大家都对就近接入有了一定的认识. 就近接入就是根据用户情况, 告诉用户访问哪里的服务更快更爽的服务.&lt;/p&gt;
+
+&lt;h3&gt;当前都有些什么互联网服务会用到这个服务?&lt;/h3&gt;
+
+&lt;p&gt;在线视频: 在线视频由于需要传输很大的视频文件, 所以让用户连接到一个”近”的服务器, 将会对视频播放的流畅度有很大的提升, 从而带来的优势也是可以感受到的.
+和在线视频相同性质的还会有音频或者图片服务等.
+移动互联网: 由于移动网络的特殊性, 这些特殊性你需要去了解一下中国的无线网络环境. 当你读懂了”世界最远的距离不是天涯海角, 而是我在移动, 你在移动”, 你就会认识到这点.&lt;/p&gt;
+
+&lt;h2&gt;有哪些设计点 ?&lt;/h2&gt;
+
+&lt;p&gt;让我们再来看看就近接入是干什么的: 就近接入就是根据用户情况, 告诉用户访问哪里的服务更快更爽的服务.
+在这个描述中涉及到的角色包括: 用户, 服务, 就近接入.
+就近接入: 作为用户访问服务的中间角色, 就近接入需要知道用户和服务的信息.&lt;/p&gt;
+
+&lt;h3&gt;那到底需要知道哪些信息呢?&lt;/h3&gt;
+
+&lt;p&gt;对于用户, 就近接入需要知道的能够定位一个用户当前所在位置(北京, 深圳, …), 当前网络(联通, 移动, …, 2G, 3G, Wifi) 的信息.
+对于服务, 就近接入需要知道这些服务部署在哪些地方(北京, 深圳, …), 这些服务当前的状况(拥塞, 死机, 良好… )
+就近接入知道用户和服务的信息后, 剩下的就是下发策略, 也就是对不同的用户应该下发哪个服务的地址让其访问. 这里需要考虑很多东西, 比如下发数量, 访问优先级, 容错等.&lt;/p&gt;
+
+&lt;h3&gt;用户位置的获取&lt;/h3&gt;
+
+&lt;p&gt;在这里, 还涉及到一个重要的东西, 就是用户给你的信息不回直接指出他在哪里(深圳, 北京,…), 当然你也可以通过gps, 但是这个几乎是不可能的. 最直接的方式是通过用户的ip, 当用户使用2G或3G网络时, 用户都会分配得一个运营商的ip 地址, 这些ip地址都是分地区的, 使用这个ip你就可以确定用户的位置了? 当然不是, 你还需要一个健全的各个运营商拥有的ip和地理位置的对应关系 这样你才能通过用户 ip 确定用户的位置.&lt;/p&gt;
+
+&lt;p&gt;用户的网络类型, 这个你可以通过前端带到就近接入, 也可以通过你的 ip 库查询获得.&lt;/p&gt;
+
+&lt;h3&gt;服务的位置及当前状态&lt;/h3&gt;
+
+&lt;p&gt;服务的位置, 这个是服务的运维人员部署的, 如何更好地部署这些服务也会是一个很大的问题(就如沃尔玛的选址, 他们不会在同一个地点开设2家一样的超市, 也不会在人少交通不便的地方开设超市). 不好的部署方式, 即使使用就近接入也无济于事.
+服务的当前状态, 这也是就近接入的一个重要依据, 不能让一个用户去一个拥塞或死机了的服务处访问(就如不能去一个拥挤或关门了的沃尔玛买东西一样, 去了只能是shit了).&lt;/p&gt;
+
+&lt;h2&gt;扩展&lt;/h2&gt;
+
+&lt;p&gt;上面只是对就近接入的一个大概描述, 其中涉及到的很多细节并未提及, 比如说如何知道服务的状态, 如何获得ip库, 如何ip容错, 如何确定用户访问速度等等, 这些都需要实现者去考虑, 这里只说了就近接入的一个部分, 利用就近接入所处的位置, 还可以有很多其他功能, 比如说用户测速, 用户环境切换等...&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>iOS 关键对象关系</title>
@@ -1853,155 +2096,6 @@ inline bool operator==(const istream_iterator&lt; T, Distance&gt;&amp; x,
 }
 &lt;/pre&gt;
 
-</content>
- </entry>
- 
- <entry>
-   <title>(STL)Value Type(值类型)</title>
-   <link href="http://nekle.github.com/2011/01/30/%28STL%29Value-Type.html"/>
-   <updated>2011-01-30T00:00:00+08:00</updated>
-   <id>http://nekle.github.com/2011/01/30/(STL)Value-Type</id>
-   <content type="html">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/syntax-js/shBrushCpp.js&quot;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;每个&lt;code&gt;iterator&lt;/code&gt;都会指向某物，此物便是&lt;code&gt;iterator&lt;/code&gt;的&lt;code&gt;value type&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;一个&lt;code&gt;iterator i&lt;/code&gt;所指物的值，可以通过&lt;code&gt;*i&lt;/code&gt;得到，&lt;code&gt;typeof（*i）&lt;/code&gt;便是&lt;code&gt;iterator&lt;/code&gt;的值类型。&lt;/p&gt;
-
-&lt;h3&gt;&lt;code&gt;iterator&lt;/code&gt; 的值类型获取：&lt;/h3&gt;
-
-&lt;h4&gt;通过函数嵌套方法间接获得：&lt;/h4&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-    template &lt;\class I, class T&gt;
-    void f_impl(I iter, T t)
-    {
-        T tmp; // T 是 I 的 value type
-        ...
-    }
-    
-    tempalte &lt;\class T&gt; inline void f(I iter)
-    {
-        f_impl(iter, *iter);
-    }
-&lt;/pre&gt;
-
-
-&lt;p&gt;T便被实例化为iterator的值类型，可通过&lt;code&gt;T tmp&lt;/code&gt;；声明iterator的值类型的临时变量。却不可以声明iterator值类型的返回类型。&lt;/p&gt;
-
-&lt;h4&gt;通过给iterator类增加一个型别类型成员变量：&lt;/h4&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-template &lt;\class Node&gt;
-struct node_wrap
-{
-    typedef Node value_type;
-    Node *ptr;
-    ...
-}
-&lt;/pre&gt;
-
-
-&lt;p&gt;iterator的value type可以通过&lt;code&gt;typename I::valu_type&lt;/code&gt;获得，但此法只适用于&lt;code&gt;iterator class&lt;/code&gt;，而对于non-class iterator却无能为力，而且由于iterator是作为指针的特化，由于指针是non-class iterator，这样做会破坏iterator的一致性。&lt;/p&gt;
-
-&lt;h4&gt;定义专有&lt;code&gt;template class&lt;/code&gt;获得iterator的值类型:&lt;/h4&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-template &lt;\class Iterator&gt;
-struct iterator_traits 
-{
-    typedef typename Iterator::value_type value_type;
-}
-&lt;/pre&gt;
-
-
-&lt;p&gt;这样我们就可以使用下面的方式获得 iterator I 的 value type:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;typename iterator_traits&amp;lt;I&amp;gt;::value_type&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-template&lt;\class T&gt;
-struct iterator_traits&lt;\T*&gt;{
-    typedef T value_type;
-}
-&lt;/pre&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-template&lt;\class T&gt;
-struct iterator_traits&lt;\const T*&gt;{
-    typedef T value_type;
-}
-&lt;/pre&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;应用&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-template&lt;\class InputIerator&gt;
-typename iterator_traits&lt;\InputIterator&gt;::value_type
-sum_nonempty(InputIerator first, InputIerator last){
-    typename iterator_traits&lt;\InputIerator&gt;::value_type result = 
-        *first++;
-    for (; first!=last; ++first) 
-        result += *first;
-    return result;
- }
- &lt;/pre&gt;
-
-
-
-</content>
- </entry>
- 
- <entry>
-   <title>Modeling Concept Refinement_and_inheritance</title>
-   <link href="http://nekle.github.com/2011/01/29/modeling-concept-refinement_and_inheritance.html"/>
-   <updated>2011-01-29T00:00:00+08:00</updated>
-   <id>http://nekle.github.com/2011/01/29/modeling-concept-refinement_and_inheritance</id>
-   <content type="html">&lt;h3&gt;Concept：&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;concept是一组型别条件（type requirement）。&lt;/li&gt;
-&lt;li&gt;concept是型别的集合。&lt;/li&gt;
-&lt;li&gt;concept是一组合法程序。&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;h3&gt;Modeling：（一个型别和一组型别之间的关系）&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;如果型别T满足某个concept C的所有条件，则型别T就是Concept C的一个model, model是型别
-与concept间的关系.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3&gt;Refinement：（一组型别和另一组型别之间的关系）&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;如果concept C2提供concept C1的所有功能，再加上其他可能的额外功能，则说C2是C1的refinement.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;自反性（自身）&lt;/li&gt;
-&lt;li&gt;涵盖性（满足C2的model必满足C1）&lt;/li&gt;
-&lt;li&gt;传递性（concept间）refinement是concept间的关系。&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;h3&gt;inheritance：（两个型别之间的关系）&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/95621335@N02/8737635679/&quot; title=&quot;d3bcbb57806c75ff295731c5633d23fe by top us, on Flickr&quot;&gt;&lt;img src=&quot;http://farm8.staticflickr.com/7286/8737635679_7cf00554d4.jpg&quot; width=&quot;351&quot; height=&quot;308&quot; alt=&quot;d3bcbb57806c75ff295731c5633d23fe&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  

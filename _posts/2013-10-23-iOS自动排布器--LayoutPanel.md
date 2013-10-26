@@ -27,6 +27,7 @@ LayoutPanel 排布器包含三种排布方式, 分别为栈式(StackPanel),停�
 下面为可用的StackPanel 的排布方向.
 
 ```
+
 typedef enum _StackPanelFlowDirector
 {
     eStackPanelFlowDirector_LeftToRight,
@@ -35,6 +36,7 @@ typedef enum _StackPanelFlowDirector
     eStackPanelFlowDirector_BottomToTop,
     
 }StackPanelFlowDirector;
+
 ```
 
 ### StackPanel 支持的布局方式
@@ -70,6 +72,7 @@ GridPanel 即九宫格排布方式, 九宫格排布方式在应用的元素排�
 ### GridPanel 支持的排布方式
 
 ```
+
 typedef enum _GridPanelArchorType
 {
     eGridPanelArchorType_LeftTop        = 0x00,
@@ -87,6 +90,7 @@ typedef enum _GridPanelArchorType
     eGridPanelArchorType_FillWidthHeight  = 0x100 | 0x200,
     
 } GridPanelArchorType;
+
 ```
 
 GridPanel 支持的排布方式和StackPanel支持的排布方式差不多一样, 但少了与Stackpanel 的`eStackPanelArchorType_Fill` 相似的填充类型.
@@ -98,6 +102,7 @@ DockPanel 即停靠式排布方式, Dock 排布方式将 Panel 的四条边作�
 ### DockPanel 支持的排布方式
 
 ```
+
 typedef enum _DockSideType {
     eDockSideType_Left,
     eDockSideType_Right,
@@ -105,6 +110,7 @@ typedef enum _DockSideType {
     eDockSideType_Bottom,
     eDockSideType_Fill,
 }DockSideType;
+
 ```
 
 和 StackPanel 和 GridPanel 相比 DockPanel 只提供了四种停靠方式, 和一种填充方式,  `eDockSideType_Fill` 填充方式同样是将Panel中剩余的空间完全填充. 

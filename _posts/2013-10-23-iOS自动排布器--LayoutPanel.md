@@ -115,6 +115,10 @@ typedef enum _DockSideType {
 ![img](http://farm4.staticflickr.com/3769/10488943405_e87320f41e.jpg)
 
 
+**github**
+
+[LayoutPanel](https://github.com/Nekle/StackPanel)
+
 
 
 

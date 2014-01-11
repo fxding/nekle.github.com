@@ -86,7 +86,7 @@ body{
 	.video embed,
 	.video object,
 	.video iframe {
-		min-height: 300px;
+		min-height: 200px;
 	}
 }
 

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>iOS自动排布器--LayoutPanel</title>
+    <link rel="stylesheet" href="/css/master.css" type="text/css" media="screen" charset="utf-8"/>
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" charset="utf-8"/>
+    <link href='http://fonts.googleapis.com/css?family=Questrial|Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
+    <!-- syntax highlight -->
+	
+	<script type="text/javascript" src="/js/syntax-js/shCore.js"></script>
+	<link type="text/css" rel="stylesheet" href="/css/syntax-css/shCoreDefault.css"/>
+	<script type="text/javascript">
+		SyntaxHighlighter.defaults['toolbar'] = false;
+		SyntaxHighlighter.all();
+	</script>
+	<!-- -->
+  </head>
+  <body class="p180">
+  <div id='header'> 
+  	<nav id='social_links'>
+		<a rel='me' href='/'>Home</a>
+  		<a rel='me' href="">WeiBo</a>
+  		<a rel='me' href="http://github.com/nekle">Github</a>
+        <a href='/archives.html' rel='me'>Archive</a>
+        <a href="/responsive.html">Responsive Demo</a>
+  	</nav>
+  	<div id='headerContent'>
+  		<h1><a href='/'>Nekle's Blog</a></h1>
+  		<p>Just a new Linux developer, on the road.</p>
+  	</div>
+  </div>
+    <div id='wrapper'>
+      <div id='posts' >
+      <div class='postWrapper'>
+		<div class='postContainer'>
+			<div>
+  	<div class="postInfo"> <a href="/2013/10/23/iOS%E8%87%AA%E5%8A%A8%E6%8E%92%E5%B8%83%E5%99%A8--LayoutPanel.html">23 Oct 2013</a></div>
+   	<div class="post">
+    <h1><a href=''>iOS自动排布器--LayoutPanel</a></h1>
+    <h1>LayoutPanel</h1>
+
+<p>LayoutPanel 排布器包含三种排布方式, 分别为栈式(StackPanel),停靠式(DockPanel), 九宫格式(GridPanel), 这三种布局方式各有特色, 在应用中使用 LayoutPanel 进行元素排布时你有可能只需要使用一种排布方式, 也有可能需要同时使用两种或三种排布方式一起来完成一个复杂的界面元素排布. 完成同一种显示的排布你可以使用不同的排布方式完成. 比如完成一个列表的排布你可以使用 StackPanel, 或者单列的 GridPanel, 或者使用同一中 Dock 方式的 DockPanel. 比如下面的图展示了使用不同的LayoutPanel完成相同的列表排布.</p>
+
+<p><img src="http://farm8.staticflickr.com/7332/10488276874_ed0774571d.jpg" alt="img" /></p>
+
+<p>下图栈式了使用三种不同的 LayoutPanel 共同完成的排布:</p>
+
+<p><strong>竖屏</strong></p>
+
+<p><img src="http://farm4.staticflickr.com/3814/10424358723_1a98e1f271.jpg" alt="img" /></p>
+
+<p><strong>横屏</strong></p>
+
+<p><img src="http://farm8.staticflickr.com/7452/10424214796_0f325478d6.jpg" alt="img" /></p>
+
+<h2>StackPanel</h2>
+
+<p>栈式排布方式就如算法中的栈一样, 元素将从左向右(从右向左), 从上到下(从下到上) 按照加入排布器的顺序依次进行排布.
+下面为可用的StackPanel 的排布方向.</p>
+
+<p>```</p>
+
+<p>typedef enum _StackPanelFlowDirector
+{</p>
+
+<pre><code>eStackPanelFlowDirector_LeftToRight,
+eStackPanelFlowDirector_RightToLeft,
+eStackPanelFlowDirector_TopToBottom,
+eStackPanelFlowDirector_BottomToTop,
+</code></pre>
+
+<p>}StackPanelFlowDirector;</p>
+
+<p>```</p>
+
+<h3>StackPanel 支持的布局方式</h3>
+
+<p>```
+typedef enum _StackPanelArchorType{</p>
+
+<pre><code>eStackPanelArchorType_LeftTop       = 0x00,
+eStackPanelArchorType_LeftCenter    = 0x01,
+eStackPanelArchorType_LeftBottom    = 0x02,
+eStackPanelArchorType_CenterTop     = 0x03,
+eStackPanelArchorType_CenterCenter  = 0x04,
+eStackPanelArchorType_CenterBottom  = 0x05,
+eStackPanelArchorType_RightTop      = 0x06,
+eStackPanelArchorType_RightCenter   = 0x07,
+eStackPanelArchorType_RightBottom   = 0x08,    
+// Fill 属性
+eStackPanelArchorType_FillWidth     = 0x100, 
+eStackPanelArchorType_FillHeight    = 0x200,
+eStackPanelArchorType_FillWidthHeight  = 0x100 | 0x200,
+eStackPanelArchorType_Fill          = 0x8000,
+</code></pre>
+
+<p>}StackPanelArchorType;</p>
+
+<p>```</p>
+
+<p>前面的几个类型为布局类型, 后面四个为填充类型, 布局类型确定了元素在排布Panel上的位置, 填充属性确定元素如何填充Panel. 布局属性可以和填充属性同时使用, 但每次布局属性和填充属性都只能使用一个.
+比如 <code>eStackPanelArchorType_LeftTop | eStackPanelArchorType_FillWidth</code> , 指定了元素排布在Panel的左上方, 元素的宽度为Panel的宽度.</p>
+
+<p><code>eStackPanelArchorType_Fill</code> 这个属性是一个特殊的填充类型, 当填充属性指定为这个类型时, 该元素将填充Panel剩余的所有空间. 比如上方<code>横屏</code>和<code>竖屏</code>的图中最下方棕色的元素就是指定了该填充类型.</p>
+
+<h2>GridPanel</h2>
+
+<p>GridPanel 即九宫格排布方式, 九宫格排布方式在应用的元素排布中也是非常常用的, 比如手机的桌面就是一种九宫格排布. 九宫格排布的一大特点就是能够确定元素的大体位置然后再做特殊的调整.</p>
+
+<h3>GridPanel 支持的排布方式</h3>
+
+<p>```</p>
+
+<p>typedef enum _GridPanelArchorType
+{</p>
+
+<pre><code>eGridPanelArchorType_LeftTop        = 0x00,
+eGridPanelArchorType_LeftCenter     = 0x01,
+eGridPanelArchorType_LeftBottom     = 0x02,
+eGridPanelArchorType_CenterTop      = 0x03,
+eGridPanelArchorType_CenterCenter   = 0x04,
+eGridPanelArchorType_CenterBottom   = 0x05,
+eGridPanelArchorType_RightTop       = 0x06,
+eGridPanelArchorType_RightCenter    = 0x07,
+eGridPanelArchorType_RightBottom    = 0x08,
+// 填充
+eGridPanelArchorType_FillWidth      = 0x100,
+eGridPanelArchorType_FillHeight     = 0x200,
+eGridPanelArchorType_FillWidthHeight  = 0x100 | 0x200,
+</code></pre>
+
+<p>} GridPanelArchorType;</p>
+
+<p>```</p>
+
+<p>GridPanel 支持的排布方式和StackPanel支持的排布方式差不多一样, 但少了与Stackpanel 的<code>eStackPanelArchorType_Fill</code> 相似的填充类型.</p>
+
+<h2>DockPanel</h2>
+
+<p>DockPanel 即停靠式排布方式, Dock 排布方式将 Panel 的四条边作为停靠点, 具有一种吸附的效果, 但也不是始终使用Panel的四条边作为Dock点, 应该说使用当前未被使用的Panel空间作为停靠. 这种排布方式也有很多应用方式, 比如说一个画图一个用的工具条.</p>
+
+<h3>DockPanel 支持的排布方式</h3>
+
+<p>```</p>
+
+<p>typedef enum _DockSideType {</p>
+
+<pre><code>eDockSideType_Left,
+eDockSideType_Right,
+eDockSideType_Top,
+eDockSideType_Bottom,
+eDockSideType_Fill,
+</code></pre>
+
+<p>}DockSideType;</p>
+
+<p>```</p>
+
+<p>和 StackPanel 和 GridPanel 相比 DockPanel 只提供了四种停靠方式, 和一种填充方式,  <code>eDockSideType_Fill</code> 填充方式同样是将Panel中剩余的空间完全填充.</p>
+
+<h3>Demo</h3>
+
+<p><img src="http://farm4.staticflickr.com/3769/10488943405_e87320f41e.jpg" alt="img" /></p>
+
+<p><strong>github</strong></p>
+
+<p><a href="https://github.com/Nekle/StackPanel">LayoutPanel</a></p>
+ 	
+    </div>	
+       <div class='insideInfo'>
+		<div class='postTags'>
+				Tags:
+				
+			 	<a href="#">#iOS 自动排布 LayoutPanel</a>
+			 	
+		</div>
+	</div>
+	<div class="navigation" style="float:left">
+	    
+	    
+	    
+	    	<a class="prev" href="/2013/10/07/%E9%97%AE%E9%A2%98%E7%9A%84%E9%97%B4%E6%8E%A5%E8%A7%A3%E5%86%B3.html" rel="bookmark">Older &#187;</a>
+	    
+  	</div>
+	
+	
+<br class='clear' />
+<script type="text/javascript" charset="utf-8">
+  var disqus_url = "http://nekle.github.com/2013/10/23/iOS%E8%87%AA%E5%8A%A8%E6%8E%92%E5%B8%83%E5%99%A8--LayoutPanel.html";
+  var disqus_title= "iOS自动排布器--LayoutPanel";
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+   var disqus_shortname = 'nekle'; // required: replace example with your forum shortname
+
+   /* * * DON'T EDIT BELOW THIS LINE * * */
+   (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+		</div>
+      </div>
+         <div class='footer'>
+    	<div class='credits'>
+			<a href="/atom.xml" target="_blank" rel="nofollow" class="subscribe">RSS</a>
+    		|
+			<a href='/archives.html' rel='bookmark'>Archive</a>
+			|
+			Theme based on <a href='http://www.tumblr.com/theme/6473'>Optimus</a>
+    	</div>
+    	</div>
+     </div>
+    </div>
+  </body>
+</html>

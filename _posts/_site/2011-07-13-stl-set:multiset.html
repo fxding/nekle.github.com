@@ -1,0 +1,108 @@
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<p>2011年7月13日 21:39</p>
+
+<h3 id='id13'>一、空间结构</h3>
+
+<p>set和multiset都是采用rb_tree实现，内部方法都是调用的rb_tree方法。</p>
+
+<p>* 抽象结构：</p>
+
+<blockquote>
+<p><img alt='img' src='http://farm9.staticflickr.com/8551/8749903434_c6a8325423.jpg' /></p>
+</blockquote>
+
+<h3 id='id14'>二、空间管理</h3>
+
+<blockquote>
+<p>参见rb_tree</p>
+</blockquote>
+
+<h3 id='setmultiset'>三、set与multiset比较</h3>
+
+<p><strong>相同点：</strong></p>
+
+<ul>
+<li>
+<p>1、采用rb_tree实现</p>
+</li>
+
+<li>
+<p>2、只允许插入和删除操作，修改是不允许的(iterator为const类型)</p>
+</li>
+
+<li>
+<p>3、提供接口完全相同。</p>
+</li>
+
+<li>
+<p>4、若要修改元素值，必须先删除原来的值插入新值。</p>
+</li>
+
+<li>
+<p>5、元素都是排好序的，所以修改元素值排序会被破坏。</p>
+</li>
+
+<li>
+<p>6、移除等值元素erase(value)，移除所有等于value的元素。(list 用remove(value))</p>
+
+<p><strong>不同点：</strong></p>
+</li>
+
+<li>
+<p>1、set中元素不允许重复，而multiset中元素允许重复。</p>
+</li>
+
+<li>
+<p>2、插入时set采用insert_unique，而multiset采用insert_equal</p>
+</li>
+
+<li>
+<p>3、插入返回值不同，set由于不允许元素重复，所以要么成功要么失败；而multiset则允许元素重复</p>
+</li>
+</ul>
+
+<p><em>注意：</em>其中pos_hint只是一个位置提示，它可以提升插入性能，也是为了提供一种统一的接口。</p>
+
+<h3 id='id15'>四、具体动作对指针影响</h3>
+
+<p>参见rb_tree</p>
+
+<h3 id='id16'>五、相关型别</h3>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+public:
+  // typedefs:
+ 
+  typedef Key key_type;
+  typedef Key value_type;
+  // 注意，以下 key_compare 和 value_compare 使用相同的比较函式
+  typedef Compare key_compare;
+  typedef Compare value_compare;
+ 
+private:
+  /* 注意，identity 定义于 &lt; stl_function.h&gt;，参见第7章，其定义为：
+    template &lt; class T&gt;
+    struct identity : public unary_function&lt; T, T&gt; {
+      const T&amp; operator()(const T&amp; x) const { return x; }
+    };
+  */
+  // 以下，rb_tree&lt; Key, Value, KeyOfValue, Compare, Alloc&gt;
+  typedef rb_tree&lt; key_type, value_type,
+                     identity&lt; value_type&gt;, key_compare, Alloc&gt; rep_type;
+  rep_type t;  // 采用红黑树（RB-tree）来表现 set
+public:
+  typedef typename rep_type::const_pointer pointer;
+  typedef typename rep_type::const_pointer const_pointer;
+  typedef typename rep_type::const_reference reference;
+  typedef typename rep_type::const_reference const_reference;
+  typedef typename rep_type::const_iterator iterator;
+  // 注意上一行，iterator 定义为 RB-tree 的 const_iterator，这表示 set 的
+  // 迭代器无法执行写入动作。这是因为 set 的元素有一定次序安排，
+  // 不允许使用者在任意处做写入动作。
+  typedef typename rep_type::const_iterator const_iterator;
+  typedef typename rep_type::const_reverse_iterator reverse_iterator;
+  typedef typename rep_type::const_reverse_iterator const_reverse_iterator;
+  typedef typename rep_type::size_type size_type;
+  typedef typename rep_type::difference_type difference_type;
+
+&lt;/pre&gt;</pre>

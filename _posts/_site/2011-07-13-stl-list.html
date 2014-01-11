@@ -1,0 +1,110 @@
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<p>2011年7月13日 15:17</p>
+
+<h3 id='id9'>一、空间结构</h3>
+
+<ul>
+<li>
+<p>1、结点结构 <pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+//串行节点结构。这是一个双向串行
+template &lt; class T&gt;
+struct __list_node {
+typedef void* void_pointer;
+void_pointer next;  // 型别为 void * 。其实可设为 __list_node&lt; T&gt;*
+void_pointer prev;
+T data;
+};
+&lt;/pre&gt;</pre></p>
+</li>
+
+<li>
+<p>2、链表结构</p>
+</li>
+</ul>
+
+<p><img alt='img' src='http://farm9.staticflickr.com/8117/8749903442_d3d81ccb33.jpg' /></p>
+
+<h3 id='id10'>二、存储管理</h3>
+
+<ul>
+<li>1、初始化时，分配空节点node，让其next和prev指针指向自身。</li>
+
+<li>2、push_back和push_front总是调用的insert插入pos前面。</li>
+
+<li>3、insert总是创建一个结点连接到pos之前。</li>
+
+<li>4、erase删除结点后，先释放结点中数据，再释放释放结点。</li>
+
+<li>5、clear释放所有结点，只保留node结点，list处于初始状态。(只有node结点的双向环)</li>
+
+<li>6、两list做swap，只交换node指针。</li>
+</ul>
+
+<h3 id='id11'>三、各动作对指针的影响</h3>
+
+<ul>
+<li>
+<p>1、插入和删除动作都不会造成指向其他元素的pointers、references、iterators 失效。</p>
+
+<h3 id='list'>四、List排序</h3>
+
+<p>* 采用归并排序： <pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;      
+// list 不能使用STL 算法 sort()，必须使用自己的 sort() member function，
+// 因为STL算法sort() 只接受RamdonAccessIterator.</pre></p>
+</li>
+</ul>
+
+<p>template &lt; class T, class Alloc&gt; void list&lt; T, Alloc&gt;::sort() { // 以下判断，如果是空白串行，或仅有一个元素，就不做任何动作。 // 使用 size() == 0 || size() == 1 来判断，虽然也可以，但是比较慢。 if (node-&gt;next == node || link_type(node-&gt;next)-&gt;next == node) return;</p>
+
+<pre><code>// 一些新的 lists，做为中介数据存放区
+list&lt; T, Alloc&gt; carry;
+list&lt; T, Alloc&gt; counter[64];
+int fill = 0;
+while (!empty()) {
+	carry.splice(carry.begin(), *this, begin());// 移动一个元素到carry上
+	int i = 0;
+	while(i &lt; fill &amp;&amp; !counter[i].empty()) {
+		counter[i].merge(carry);
+		carry.swap(counter[i++]);
+	}
+	carry.swap(counter[i]);
+	if (i == fill) ++fill;
+}
+// 遍历counter将结果最终归并到counter[fill-1]上
+for (int i = 1; i &lt; fill; ++i) counter[i].merge(counter[i-1]);
+swap(counter[fill-1]);</code></pre>
+
+<p>} &lt;/pre&gt;</p>
+
+<h3 id='id12'>五、相关型别</h3>
+
+<ul>
+<li>1、Iterator相关型别 <pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;</pre></li>
+</ul>
+
+<p>// 串行专属迭代器。既然撰写串行迭代器避免不了要曝露串行的实作细节， // 那么就让串行和串行迭代器一起设计好了。 template&lt; class T, class Ref, class Ptr&gt; struct <strong>list_iterator { // 未继承 std::iterator typedef</strong>list_iterator&lt; T, T&amp;, T<em>&gt; iterator; typedef <strong>list_iterator&lt; T, const T&amp;, const T<em>&gt; const_iterator; typedef <strong>list_iterator&lt; T, Ref, Ptr&gt; self;</strong></em></strong></em></p>
+
+<p>// 未继承std::iterator，所以必须自行撰写五个必要的迭代器相应型别 typedef bidirectional_iterator_tag iterator_category; // (1) typedef T value_type; // (2) typedef Ptr pointer; // (3) typedef Ref reference; // (4) typedef <strong>list_node&lt; T&gt;* link_type; typedef size_t size_type; typedef ptrdiff_t difference_type; // (5)</strong></p>
+
+<p>link_type node; // 保持与容器的联结 &lt;/pre&gt;</p>
+
+<ul>
+<li>2、List相关型别 <pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+public:     
+typedef T value_type;
+typedef value_type* pointer;
+typedef const value_type* const_pointer;
+typedef value_type&amp; reference;
+typedef const value_type&amp; const_reference;
+typedef list_node* link_type;
+typedef size_t size_type;
+typedef ptrdiff_t difference_type;</pre></li>
+</ul>
+
+<p>public: // 当客端定义一个list&lt; T&gt;::iterator 对象，例如 list&lt; T&gt;::iterator， // 便唤起__list_iterator&lt; T, T&amp;, T<em>&gt; 的 ctor。 // 如果有初值，便会因此设定一个迭代器对容器的联结关系。 typedef <strong>list_iterator&lt; T, T&amp;, T<em>&gt; iterator; typedef <strong>list_iterator&lt; T, const T&amp;, const T<em>&gt; const_iterator; protected: // 从实作细节看来，本 list 只维护一个节点指标，指向最后（尾）节点的下一位置。 // 由于这是一个环状双向串行，因此，欲对外供应头节点或尾节点，都十分容易， // 见 front(), back()。 link_type node; // 永远指向最后节点的下一节点。该节点无元素值，代表空节点。 // 其 next 节点永远是头节点。</em></strong></em></strong></em></p>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;/pre&gt;</pre>

@@ -1,0 +1,30 @@
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<p>2011年3月28日 15:22</p>
+
+<h2 id='copy'>应用：copy</h2>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template &lt; class InputIterator, class OutputIterator&gt;
+OutputIterator copy(InputIerator first, InputIerator last, OutputIterator result)
+{
+	for (; first != last; ++result, ++first)
+		*result = *first;
+	return result;
+}
+&lt;/pre&gt;</pre>
+<h2 id='concept'>Concept：</h2>
+
+<ul>
+<li>①复制（参数传入）和赋值（<code>*result=*first</code>）；</li>
+
+<li>②可累加（<code>++result</code>），表达式<code>++p</code>与<code>p++</code>有意义；</li>
+
+<li>③single-pass（单回），只写性（可以<code>*p=x</code>，但不能<code>x=*p</code>）； * ④不提供比较（!=、==、&lt;、&gt;） * ⑤</li>
+</ul>
+
+<h2 id='ostream_itertor'>例：ostream_itertor</h2>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush:cpp&quot;&gt;
+// 这是一个output iterator，能够将对象格式化输出到某个 basic_ostream 上。
+// 注意，此版本为旧有之 HP 规格，未符合标准接口：
+// ostream_iterator</pre>

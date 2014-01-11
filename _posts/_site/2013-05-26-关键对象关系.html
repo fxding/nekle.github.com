@@ -1,0 +1,71 @@
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<h3 id='id27'>关系图</h3>
+
+<p>下图描述了一个ios应用中重要的几个对象之间的关系.</p>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+
++---------------+     +-----------------------+  +-----------+      +-----------+ +-------------------+
+| UIApplication |     | UIApplicationDelegate |  | UIWindow  |      | UIScreen  | | UIViewController  |
++---------------+     +-----------------------+  +-----------+      +-----------+ +-------------------+
+        |                        |                  |                     |            |
+        | delegate&lt; assign&gt;      |                  |                     |            |
+        |-----------------------&gt;|                  |                     |            |
+        |                        |                  |                     |            |
+        | keyWindow&lt; readonly&gt;   |                  |                     |            |
+        |------------------------------------------&gt;|                     |            |
+        |                        |                  |                     |            |
+        | windows&lt; readonly&gt;     |                  |                     |            |
+        |------------------------------------------&gt;|                     |            |
+        |                        |                  |                     |            |
+        |                        | window&lt; retain&gt;  |                     |            |
+        |                        |-----------------&gt;|                     |            |
+        |                        |                  |                     |            |
+        |                        |                  | screen&lt; retain&gt;     |            |
+        |                        |                  |--------------------&gt;|            |
+        |                        |                  |                     |            |
+        |                        |                  | rootViewController&lt; retain&gt;      |
+        |                        |                  |---------------------------------&gt;|
+        |                        |                  |                     |            |
+&lt;/pre&gt;</pre>
+<h3 id='uiapplication'>UIApplication</h3>
+
+<p><em>delegate</em>:</p>
+
+<blockquote>
+<p>一个遵从<code>UIApplicationDelegate</code> 定义的 protocol 的对象, 当<code>UIApplication</code> 发生状态变化时, 就会调用<code>delegate</code> 的相应方法, 实现这些方法给了用户一个在<code>UIApplication</code>状态变化时做出响应的机会, 比如: 应用将要关闭, 系统处于低内存, 应用完成启动.<br /></p>
+</blockquote>
+
+<p><em>windows</em>:</p>
+
+<blockquote>
+<p>包含了应用可见的和不可见的<code>windows</code>. 这些<code>windows</code> 按照从后向前的顺序排序.<br /></p>
+</blockquote>
+
+<p><em>keyWindow</em>:</p>
+
+<blockquote>
+<p>指向应用的key Window, 这个key window 为 <code>windows</code> 中最后发送了<code>makeKeyAndVisible</code> 消息的 window.</p>
+</blockquote>
+
+<h3 id='uiapplicationdelegate'>UIApplicationDelegate</h3>
+
+<p><em>window</em>:</p>
+
+<blockquote>
+<p>指向了应用在设备主屏上显示出来的内容window. 一般情况下, 当创建一个工程时, xcode 都会同时在app 的delegate 中创建一个<code>window</code>属性. 当此属性为<code>nil</code>时, 将会导致应用创建一个通用的<code>UIWindow</code> 赋值给该属性. 如果想为应用提供一个自定义的window, 你需要实现给属性的<code>getter</code> 方法, 通过<code>getter</code> 去创建和返回你的自定义window.</p>
+</blockquote>
+
+<h3 id='uiwindow'>UIWindow</h3>
+
+<p><em>screen</em>:</p>
+
+<blockquote>
+<p>指向了<code>window</code>当前在其上显示的<code>screen</code>. 默认情况下, 所有的<code>windows</code>都由主设<code>screen</code>幕创建, 当有另外的<code>screen</code> 连接到设备上时, assigning 一个不同的screen给此属性将会导致<code>window</code>显示在新的screen上.<br /></p>
+</blockquote>
+
+<p><em>rootViewController</em>:</p>
+
+<blockquote>
+<p>指向了window的root view controller, 这个controller提供了window的内容view.assigning 一个view controller 给这个属性, 将会使这个view controller的 view 成为这个window 的内容 view. 如果window已经指向一个view controller, 将会移除已存在的view controller, 在指向新的view controller.<br /></p>
+</blockquote>

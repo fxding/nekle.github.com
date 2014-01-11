@@ -1,0 +1,56 @@
+<p>2011年3月27日 19:48</p>
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<h2 id='find'>应用：find</h2>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template &lt; class InputIterator, class T&gt;
+InputIterator find(InputIterator first, InputIterator last, const T&amp; value) {
+  while (first != last &amp;&amp; *first != value) ++first;
+  return first;
+}
+&lt;/pre&gt;</pre>
+<h3 id='concept'>Concept:</h3>
+
+<ul>
+<li>①是可取值的通过<code>*</code>操作，即<code>*p</code>有充分意义。</li>
+
+<li>②可比较两个input iterator对象的相等性，如first != last。可以判断是否到达range尾端。</li>
+
+<li>③可以被复制，如first、last值的传入调用的copy constructor。</li>
+
+<li>④每个iterator都有一个value type，即iterator所指对象的类型。</li>
+
+<li>⑤可对一个input iterator进行累加操作，即<code>++p</code>和<code>p++</code>有意义。</li>
+
+<li>⑥我们可以通过<code>*iterator</code>获得iterator所指的值，但不一定能通过<code>*it = x</code>修改其值。</li>
+
+<li>⑦input iterator仅支持指针运算中的一小部分，如input iterator可以累加，但不一定提供递减和算术运算。</li>
+
+<li>⑧input iterator也只支持测试两个input iterator是否相等，不能比较先后顺序。</li>
+</ul>
+
+<p><strong>注意:</strong> 这些Concept限制是运用input iterator的算法所受到的限制，而不是构造input iterator所受到的限制，任何运用input iterator的算法都不能超出input iterator的限制。</p>
+
+<p>例： <pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+// 这是一个input iterator，能够为「来自某一 basic_istream」的对象执行
+// 格式化输入动作。注意，此版本为旧有之 HP 规格，未符合标准接口：
+// istream_iterator</pre></p>
+
+<p>// 下面这些ctors 使 istream_iterator 和某个istream object 系结起来。 istream_iterator() : stream(&amp;cin), end_marker(false) {} istream_iterator(istream&amp; s) : stream(&amp;s) { read(); } // 以上两行的用法： // istream_iterator&lt; int&gt; eos; 造成 end_marker 为 false。 // istream_iterator&lt; int&gt; initer(cin); 引发 read()。程序至此会等待输入。 // 因此，下面这两行客端程序： // istream_iterator&lt; int&gt; initer(cin); (A) // cout &#171;&#160;&#8220;please input&#8230;&#8221; &#171;&#160;endl; (B) // 会停留在 (A) 等待一个输入，然后才执行 (B) 出现提示讯息。这是不合理的现象。 // 规避之道：永远在最必要的时候，才定义一个 istream_iterator。</p>
+
+<p>reference operator* () const { return value; } #ifndef <strong>SGI_STL_NO_ARROW_OPERATOR pointer operator-&gt;() const { return &amp;(operator* ()); } #endif /*</strong>SGI_STL_NO_ARROW_OPERATOR <em>/</em></p>
+
+<p>// 迭代器前进一个位置，就代表要读取一笔数据 istream_iterator&lt; T, Distance&gt;&amp; operator++() { read(); return <em>this; } istream_iterator&lt; T, Distance&gt; operator++(int) { istream_iterator&lt; T, Distance&gt; tmp =</em>this; read(); return tmp; } };</p>
+
+<p>#ifndef <strong>STL_CLASS_PARTIAL_SPECIALIZATION</strong></p>
+
+<p>template &lt; class T, class Distance&gt; inline input_iterator_tag iterator_category(const istream_iterator&lt; T, Distance&gt;&amp;) { return input_iterator_tag(); }</p>
+
+<p>template &lt; class T, class Distance&gt; inline T* value_type(const istream_iterator&lt; T, Distance&gt;&amp;) { return (T<em>) 0; }</em></p>
+
+<p>template &lt; class T, class Distance&gt; inline Distance* distance_type(const istream_iterator&lt; T, Distance&gt;&amp;) { return (Distance<em>) 0; }</em></p>
+
+<p>#endif /* <strong>STL_CLASS_PARTIAL_SPECIALIZATION <em>/</em></strong></p>
+
+<p>template &lt; class T, class Distance&gt; inline bool operator==(const istream_iterator&lt; T, Distance&gt;&amp; x, const istream_iterator&lt; T, Distance&gt;&amp; y) { return x.stream == y.stream &amp;&amp; x.end_marker == y.end_marker || x.end_marker == false &amp;&amp; y.end_marker == false; } &lt;/pre&gt;</p>

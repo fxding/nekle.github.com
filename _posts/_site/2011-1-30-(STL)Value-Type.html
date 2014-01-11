@@ -1,0 +1,70 @@
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<p>每个<code>iterator</code>都会指向某物，此物便是<code>iterator</code>的<code>value type</code>。</p>
+
+<p>一个<code>iterator i</code>所指物的值，可以通过<code>*i</code>得到，<code>typeof（*i）</code>便是<code>iterator</code>的值类型。</p>
+
+<h3 id='_'><code>iterator</code> 的值类型获取：</h3>
+
+<h4 id='id20'>通过函数嵌套方法间接获得：</h4>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+	template &lt;\class I, class T&gt;
+	void f_impl(I iter, T t)
+	{
+		T tmp; // T 是 I 的 value type
+		...
+	}
+	
+	tempalte &lt;\class T&gt; inline void f(I iter)
+	{
+		f_impl(iter, *iter);
+	}
+&lt;/pre&gt;</pre>
+<p>T便被实例化为iterator的值类型，可通过<code>T tmp</code>；声明iterator的值类型的临时变量。却不可以声明iterator值类型的返回类型。</p>
+
+<h4 id='iterator'>通过给iterator类增加一个型别类型成员变量：</h4>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template &lt;\class Node&gt;
+struct node_wrap
+{
+	typedef Node value_type;
+	Node *ptr;
+	...
+}
+&lt;/pre&gt;</pre>
+<p>iterator的value type可以通过<code>typename I::valu_type</code>获得，但此法只适用于<code>iterator class</code>，而对于non-class iterator却无能为力，而且由于iterator是作为指针的特化，由于指针是non-class iterator，这样做会破坏iterator的一致性。</p>
+
+<h4 id='iterator'>定义专有<code>template class</code>获得iterator的值类型:</h4>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template &lt;\class Iterator&gt;
+struct iterator_traits 
+{
+	typedef typename Iterator::value_type value_type;
+}
+&lt;/pre&gt;</pre>
+<p>这样我们就可以使用下面的方式获得 iterator I 的 value type:</p>
+
+<p><code>typename iterator_traits&lt;I&gt;::value_type</code></p>
+
+<p>*<br /><pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template&lt;\class T&gt;
+struct iterator_traits&lt;\T*&gt;{
+	typedef T value_type;
+}
+&lt;/pre&gt;</pre></p>
+
+<p>*</p>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template&lt;\class T&gt;
+struct iterator_traits&lt;\const T*&gt;{
+	typedef T value_type;
+}
+&lt;/pre&gt;</pre>
+<p>* 应用</p>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+&lt;pre class=&quot;brush: cpp&quot;&gt;
+template</pre>

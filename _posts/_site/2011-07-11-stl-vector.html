@@ -1,0 +1,47 @@
+<script type='text/javascript' src='/js/syntax-js/shBrushCpp.js' />
+<p>2011年7月11日 16:00</p>
+
+<h3 id='vector'>一、vector结构</h3>
+
+<blockquote>
+<p>vector是一个顺序存储容器，内部使用动态数组实现。支持元素的随机访问，所以只要知道位置，就可以在常数时间内存取该元素。在末尾插入和删除元素时，vector的性能很好，可以在常数时间内完成。如果实在前段或中部插入或删除元素，性能很差，需在线性时间内完成，因为动作点之后的每一个元素都必须移动，每一次都必须调用赋值运算。</p>
+</blockquote>
+
+<blockquote>
+<p><img alt='img' src='http://farm9.staticflickr.com/8130/8748723621_8399faf990.jpg' /></p>
+</blockquote>
+
+<h3 id='id5'>二、空间管理</h3>
+
+<ul>
+<li>1、 初始换空间分配 * a、默认请况下，空间分配为0.（第一次插入空间变为 1 ） * b、可设定空间大下和初始化值。<code>Vector(10, &quot;a&quot;)</code>；</li>
+
+<li>2、空间不足 * a、当空间不足时，重新申请一个原来2倍的空间，拷贝原来的值，然后析构原来的空间(若空间分配失败，则析构已分配的空间，rollback)</li>
+
+<li>3、若想减少空间，可利用swap函数，但效率低下。</li>
+</ul>
+
+<h3 id='id6'>三、具体动作空间管理</h3>
+
+<ul>
+<li>1、重分配空间大小<code>reserve(size_type n)</code>，若n大于现在空间则重新申请空间，将数据拷贝到新空间，并设置iterator信息，否则不做处理。</li>
+
+<li>2、管理数据数量<code>resize(size_type new_size, const T&amp; x)</code>，若new_size小于现在数据size则析构多余数据，否则用x补够数据。</li>
+
+<li>3、<code>clear</code>析构所有数据空间</li>
+</ul>
+
+<h3 id='id7'>四、动作与相关型别失效</h3>
+
+<ul>
+<li>1、插入和删除元素，都会使动作点之后的元素的references、pointers、iterators失效，如果插入动作会引起空间大小重新分配，那么该容器上的所有references、pointers、iterators都会失效。</li>
+
+<li>2、<code>swap</code>则所有references、pointers、iterators都会失效。</li>
+
+<li>3、</li>
+</ul>
+
+<h3 id='id8'>二、相关型别</h3>
+<pre style='border: solid 3px red; background-color: pink' class='markdown-html-error'>REXML could not parse this XML/HTML: 
+ &lt;pre class=&quot;brush: cpp&quot;&gt; 
+// 以下标示(1),(2),(3),(4),(5)，代表 iterator_traits</pre>
